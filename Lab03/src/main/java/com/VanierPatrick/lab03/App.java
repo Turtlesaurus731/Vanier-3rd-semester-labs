@@ -39,6 +39,7 @@ public class App extends Application {
         Button registerBtn = new Button("Register");
         Button clearBtn = new Button("Clear");
         Label statusLabel = new Label(""); 
+
         
         gridPane.add(firstName, 0, 0);
         gridPane.add(firstNameField, 1, 0);
@@ -52,6 +53,44 @@ public class App extends Application {
         gridPane.add(registerBtn, 0, 4);
         gridPane.add(clearBtn, 1, 4);
         gridPane.add(statusLabel, 0, 5, 2, 1); 
+        
+       
+        
+        registerBtn.setOnAction(event -> {
+            String enteredEmail = emailField.getText();
+            String enteredPassword = passwordField.getText();
+
+            boolean validEmail = enteredEmail.contains("@")
+            && enteredEmail.contains(".");
+
+            boolean hasDigit = false;
+            boolean hasLetter = false;
+
+            for (int i = 0; i < enteredPassword.length(); i++) {
+                char c = enteredPassword.charAt(i);
+
+                if (Character.isDigit(c)) {
+                    hasDigit = true;
+                }
+                if (Character.isLetter(c)) {
+                    hasLetter = true;
+                }
+            }
+
+            if (validEmail && hasDigit && hasLetter) {
+                statusLabel.setText("Welcome, " + firstNameField.getText() + "! ^-^");
+            } else {
+                statusLabel.setText("Invalid email or password.");
+            }
+        });
+        
+        clearBtn.setOnAction(event -> {
+            firstNameField.clear();
+            lastNameField.clear();
+            emailField.clear();
+            passwordField.clear();
+            statusLabel.setText("");
+        });
         
         
         Scene scene = new Scene(root, 400, 300);
