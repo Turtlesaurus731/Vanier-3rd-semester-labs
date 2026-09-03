@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
@@ -39,7 +38,6 @@ public class App extends Application {
         Button registerBtn = new Button("Register");
         Button clearBtn = new Button("Clear");
         Label statusLabel = new Label(""); 
-
         
         gridPane.add(firstName, 0, 0);
         gridPane.add(firstNameField, 1, 0);
@@ -52,10 +50,53 @@ public class App extends Application {
         
         gridPane.add(registerBtn, 0, 4);
         gridPane.add(clearBtn, 1, 4);
-        gridPane.add(statusLabel, 0, 5, 2, 1); 
+        gridPane.add(statusLabel, 0, 5, 2, 1);
+        registerBtn.setDisable(true);
         
-       
+        firstNameField.setOnKeyPressed(event -> {
+            if (!firstNameField.getText().isEmpty()
+                && !lastNameField.getText().isEmpty()
+                && !emailField.getText().isEmpty()
+                && !passwordField.getText().isEmpty()) {
+                registerBtn.setDisable(false);
+            } else {
+                registerBtn.setDisable(true);
+            }
+        });
         
+        lastNameField.setOnKeyPressed(event -> {
+            if (!firstNameField.getText().isEmpty()
+                && !lastNameField.getText().isEmpty()
+                && !emailField.getText().isEmpty()
+                && !passwordField.getText().isEmpty()) {
+                registerBtn.setDisable(false);
+            } else {
+                registerBtn.setDisable(true);
+            }
+        });
+        
+        emailField.setOnKeyPressed(event -> {
+            if (!firstNameField.getText().isEmpty()
+                && !lastNameField.getText().isEmpty()
+                && !emailField.getText().isEmpty()
+                && !passwordField.getText().isEmpty()) {
+                registerBtn.setDisable(false);
+            } else {
+                registerBtn.setDisable(true);
+            }
+        });
+        
+        passwordField.setOnKeyPressed(event -> {
+            if (!firstNameField.getText().isEmpty()
+                && !lastNameField.getText().isEmpty()
+                && !emailField.getText().isEmpty()
+                && !passwordField.getText().isEmpty()) {
+                registerBtn.setDisable(false);
+            } else {
+                registerBtn.setDisable(true);
+            } 
+        });
+
         registerBtn.setOnAction(event -> {
             String enteredEmail = emailField.getText();
             String enteredPassword = passwordField.getText();
@@ -76,12 +117,17 @@ public class App extends Application {
                     hasLetter = true;
                 }
             }
-
-            if (validEmail && hasDigit && hasLetter) {
-                statusLabel.setText("Welcome, " + firstNameField.getText() + "! ^-^");
+            
+            if (firstNameField.getText().isEmpty()
+                || lastNameField.getText().isEmpty()
+                || enteredEmail.isEmpty()
+                || enteredPassword.isEmpty()) {                
+                statusLabel.setText("Invalid");                
+            } else  if (validEmail && hasDigit && hasLetter) {
+                statusLabel.setText("Welcome, " + firstNameField.getText());
             } else {
                 statusLabel.setText("Invalid email or password.");
-            }
+            }         
         });
         
         clearBtn.setOnAction(event -> {
@@ -92,13 +138,11 @@ public class App extends Application {
             statusLabel.setText("");
         });
         
-        
         Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
         stage.show();
     }
-
-
+    
     public static void main(String[] args) {
         launch();
     }
