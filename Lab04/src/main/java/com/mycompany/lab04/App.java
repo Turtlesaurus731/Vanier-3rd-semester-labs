@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -50,6 +51,8 @@ public class App extends Application {
         TextField conferenceFeeField = new TextField();
         TextField lodgingFeeField = new TextField();
         
+        Button calculateBtn = new Button("Calculate");
+               
         gridPane.add(numOfDaysOnTrip, 0, 0);
         gridPane.add(numDaysField,1, 0);
         gridPane.add(amountOfAirfare, 0, 1);
@@ -67,6 +70,8 @@ public class App extends Application {
         gridPane.add(lodgingCharges, 0, 7);
         gridPane.add(lodgingFeeField, 1, 7);
         
+        gridPane.add(calculateBtn, 0, 8);
+        
         this.userInformtation = new LinkedHashMap<>();
         
         userInformtation.clear();
@@ -78,6 +83,27 @@ public class App extends Application {
         userInformtation.put("Taxi fees", taxiFeeField);
         userInformtation.put("Conference/Seminar fees", conferenceFeeField);
         userInformtation.put("Lodging fees", lodgingFeeField);
+        
+        double totalAllowableExpenses;
+        
+        if (InputValidatior.validate(userInformtation)) {
+            double mealFees = 37 * Integer.valueOf(numDaysField.getText());
+            double parkingFees = 10 * Integer.valueOf(numDaysField.getText());
+            double taxiFees = 20 * Integer.valueOf(numDaysField.getText());
+            double lodgingFees = 95 * Integer.valueOf(numDaysField.getText());
+            double privateVehicleFees = 0.29 * Double.valueOf(numDrivenField
+                    .getText());
+            
+            totalAllowableExpenses = mealFees + parkingFees + taxiFees 
+                    + lodgingFees + privateVehicleFees;
+        } 
+        
+        
+        calculateBtn.setOnAction(event -> {
+            if (InputValidatior.validate(userInformtation)) {
+                
+            }      
+        });
         
         if (InputValidatior.validate(userInformtation)) {
             System.out.println("Test");
