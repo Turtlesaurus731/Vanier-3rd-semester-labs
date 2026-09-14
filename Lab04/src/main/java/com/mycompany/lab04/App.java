@@ -57,6 +57,7 @@ public class App extends Application {
         TextField lodgingFeeField = new TextField();
         
         Button calculateBtn = new Button("Calculate");
+        Button clearBtn = new Button("Clear");
                
         gridPane.add(numOfDaysOnTrip, 0, 0);
         gridPane.add(numDaysField,1, 0);
@@ -76,6 +77,7 @@ public class App extends Application {
         gridPane.add(lodgingFeeField, 1, 7);
         
         gridPane.add(calculateBtn, 0, 8);
+        gridPane.add(clearBtn, 1, 8);
         
         gridPane.add(totalExpensesLabel, 0, 10);
         gridPane.add(allowableExpensesLabel, 0, 11);
@@ -149,6 +151,17 @@ public class App extends Application {
                 totalSavingsLabel.setText(
                         String.format("Amount saved: %.2f$", savings));
             }      
+        });
+        
+        clearBtn.setOnAction(event -> {
+            for (TextField field : userInformtation.values()) {
+                field.clear();
+            }
+            
+            totalExpensesLabel.setText("");
+            allowableExpensesLabel.setText("");
+            excessLabel.setText("");
+            totalSavingsLabel.setText("");
         });
                 
         Scene scene = new Scene(root, 600, 500);
