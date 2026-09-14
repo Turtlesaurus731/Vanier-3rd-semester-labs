@@ -113,10 +113,13 @@ public class App extends Application {
                         + (lodgingFees * NumDays);             
                 
                 double reimbursedMealFees = 37 * NumDays;
-                double reimbursedParkingFees = 10 * NumDays;
-                double reimbursedTaxiFees = 20 * NumDays;
-                double reimbursedLodgingFees = 95 * NumDays;
-                double reimbursedPrivateVehicleFees = 0.29 * milesDriven;
+                double reimbursedParkingFees = 
+                        Math.min(parkingFees, 10 * NumDays);
+                double reimbursedTaxiFees = 
+                        Math.min(taxiFees,20 * NumDays);
+                double reimbursedLodgingFees = 
+                        Math.min(lodgingFees , 95 * NumDays);
+                double reimbursedPrivateVehicleFees = 0.27 * milesDriven;
 
                 double totalAllowableExpenses = reimbursedMealFees 
                         + reimbursedParkingFees 
@@ -147,11 +150,7 @@ public class App extends Application {
                         String.format("Amount saved: %.2f$", savings));
             }      
         });
-        
-        if (InputValidatior.validate(userInformtation)) {
-            System.out.println("Test");
-        }
-        
+                
         Scene scene = new Scene(root, 600, 500);
         stage.setScene(scene);
         stage.show();
