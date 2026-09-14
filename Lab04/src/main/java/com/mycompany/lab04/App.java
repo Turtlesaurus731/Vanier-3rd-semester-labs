@@ -1,5 +1,8 @@
 package com.mycompany.lab04;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +19,7 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
+    private static Map<String, TextField> userInformtation;
 
     @Override
     public void start(Stage stage) {
@@ -63,6 +67,22 @@ public class App extends Application {
         gridPane.add(lodgingCharges, 0, 7);
         gridPane.add(lodgingFeeField, 1, 7);
         
+        this.userInformtation = new LinkedHashMap<>();
+        
+        userInformtation.clear();
+        userInformtation.put("Days", numDaysField);
+        userInformtation.put("Airefares", airfareField);
+        userInformtation.put("Car fees", carFeeField);
+        userInformtation.put("Miles driven", numDrivenField);
+        userInformtation.put("Parking fees", parkingFeeField);
+        userInformtation.put("Taxi fees", taxiFeeField);
+        userInformtation.put("Conference/Seminar fees", conferenceFeeField);
+        userInformtation.put("Lodging fees", lodgingFeeField);
+        
+        if (InputValidatior.validate(userInformtation)) {
+            System.out.println("Test");
+        }
+        
         Scene scene = new Scene(root, 600, 500);
         stage.setScene(scene);
         stage.show();
@@ -72,4 +92,7 @@ public class App extends Application {
         launch();
     }
 
+    public static Map<String, TextField> getUserInformtation() {
+        return userInformtation;
+    }
 }
