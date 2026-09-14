@@ -165,6 +165,7 @@ public class App extends Application {
         });
                 
         Scene scene = new Scene(root, 600, 500);
+        scene.getStylesheets().add("style.css");
         stage.setScene(scene);
         stage.show();
     }
