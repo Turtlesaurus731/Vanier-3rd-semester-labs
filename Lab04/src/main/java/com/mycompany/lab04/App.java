@@ -46,7 +46,24 @@ public class App extends Application {
         TextField conferenceFeeField = new TextField();
         TextField lodgingFeeField = new TextField();
         
-        Scene scene = new Scene(root, 400, 300);
+        gridPane.add(numOfDaysOnTrip, 0, 0);
+        gridPane.add(numDaysField,1, 0);
+        gridPane.add(amountOfAirfare, 0, 1);
+        gridPane.add(airfareField, 1, 1);
+        gridPane.add(amountCarFees, 0, 2);
+        gridPane.add(carFeeField, 1, 2);
+        gridPane.add(numberMilesDriven, 0, 3);
+        gridPane.add(numDrivenField, 1, 3);
+        gridPane.add(amountParkingFee, 0, 4);
+        gridPane.add(parkingFeeField, 1, 4);
+        gridPane.add(amountTaxiCharges, 0, 5);
+        gridPane.add(taxiFeeField, 1, 5);
+        gridPane.add(conferenceFees, 0, 6);
+        gridPane.add(conferenceFeeField, 1, 6);
+        gridPane.add(lodgingCharges, 0, 7);
+        gridPane.add(lodgingFeeField, 1, 7);
+        
+        Scene scene = new Scene(root, 600, 500);
         stage.setScene(scene);
         stage.show();
     }
