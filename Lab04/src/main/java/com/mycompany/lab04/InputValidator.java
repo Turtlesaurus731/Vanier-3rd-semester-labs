@@ -11,15 +11,22 @@ import javafx.scene.control.TextField;
  *
  * @author 2584955
  */
-public class InputValidatior {
+public class InputValidator {
     
+    /**
+     * Takes given user information and checks if it is valid 
+     * It is valid if no fields are empty, are bigger than 0 
+     * and if they are Doubles (or Integer for the number of days)
+     * @param userInformation given user information
+     * @return 
+     */
     public static boolean validate(Map<String, TextField> userInformation) {
         for (String fieldName: userInformation.keySet()) {
             TextField field = userInformation.get(fieldName);
             String infoToValidate = field.getText().trim();
             
             if (infoToValidate.isEmpty()) {
-                System.out.println(fieldName + "is empty");
+                System.out.println(fieldName + " is empty");
                 return false;
             }
             
@@ -28,7 +35,7 @@ public class InputValidatior {
                     int days = Integer.valueOf(infoToValidate);
                     
                     if (days <= 0) {
-                        System.out.println(fieldName + "is not greater than 0");
+                        System.out.println(fieldName + " is not greater than 0");
                         return false;
                     }
                 } else {

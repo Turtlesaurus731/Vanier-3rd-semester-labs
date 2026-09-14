@@ -82,7 +82,7 @@ public class App extends Application {
         gridPane.add(excessLabel, 0, 12);
         gridPane.add(totalSavingsLabel, 0, 13);
         
-        this.userInformtation = new LinkedHashMap<>();
+        App.userInformtation = new LinkedHashMap<>();
         
         userInformtation.put("Days", numDaysField);
         userInformtation.put("Airefares", airfareField);
@@ -94,7 +94,7 @@ public class App extends Application {
         userInformtation.put("Lodging fees", lodgingFeeField);
  
         calculateBtn.setOnAction(event -> {
-            if (InputValidatior.validate(userInformtation)) {
+            if (InputValidator.validate(userInformtation)) {
                 
                 int NumDays = Integer.valueOf(numDaysField.getText());
                 double airFare = Double.valueOf(airfareField.getText());
