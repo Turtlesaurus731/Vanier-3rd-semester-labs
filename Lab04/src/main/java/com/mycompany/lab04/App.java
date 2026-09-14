@@ -42,6 +42,11 @@ public class App extends Application {
         Label conferenceFees = new Label("Conference/Seminar fees (if any): ");
         Label lodgingCharges = new Label("Lodging charges per night: ");
         
+        Label totalExpensesLabel = new Label();
+        Label allowableExpensesLabel = new Label();
+        Label excessLabel = new Label();
+        Label totalSavingsLabel = new Label();
+        
         TextField numDaysField = new TextField();
         TextField airfareField = new TextField();
         TextField carFeeField = new TextField();
@@ -72,9 +77,13 @@ public class App extends Application {
         
         gridPane.add(calculateBtn, 0, 8);
         
+        gridPane.add(totalExpensesLabel, 0, 10);
+        gridPane.add(allowableExpensesLabel, 0, 11);
+        gridPane.add(excessLabel, 0, 12);
+        gridPane.add(totalSavingsLabel, 0, 13);
+        
         this.userInformtation = new LinkedHashMap<>();
         
-        userInformtation.clear();
         userInformtation.put("Days", numDaysField);
         userInformtation.put("Airefares", airfareField);
         userInformtation.put("Car fees", carFeeField);
@@ -83,25 +92,59 @@ public class App extends Application {
         userInformtation.put("Taxi fees", taxiFeeField);
         userInformtation.put("Conference/Seminar fees", conferenceFeeField);
         userInformtation.put("Lodging fees", lodgingFeeField);
-        
-        double totalAllowableExpenses;
-        
-        if (InputValidatior.validate(userInformtation)) {
-            double mealFees = 37 * Integer.valueOf(numDaysField.getText());
-            double parkingFees = 10 * Integer.valueOf(numDaysField.getText());
-            double taxiFees = 20 * Integer.valueOf(numDaysField.getText());
-            double lodgingFees = 95 * Integer.valueOf(numDaysField.getText());
-            double privateVehicleFees = 0.29 * Double.valueOf(numDrivenField
-                    .getText());
-            
-            totalAllowableExpenses = mealFees + parkingFees + taxiFees 
-                    + lodgingFees + privateVehicleFees;
-        } 
-        
-        
+ 
         calculateBtn.setOnAction(event -> {
             if (InputValidatior.validate(userInformtation)) {
                 
+                int NumDays = Integer.valueOf(numDaysField.getText());
+                double airFare = Double.valueOf(airfareField.getText());
+                double carFees = Double.valueOf(carFeeField.getText());
+                double milesDriven = Double.valueOf(numDrivenField.getText());
+                double parkingFees = Double.valueOf(parkingFeeField.getText());
+                double taxiFees = Double.valueOf(taxiFeeField.getText());
+                double conferenceCost = Double.valueOf(conferenceFeeField.getText());
+                double lodgingFees = Double.valueOf(lodgingFeeField.getText());                
+                
+                double totalExpenses = airFare 
+                        + carFees 
+                        + parkingFees 
+                        + taxiFees 
+                        + conferenceCost 
+                        + (lodgingFees * NumDays);             
+                
+                double reimbursedMealFees = 37 * NumDays;
+                double reimbursedParkingFees = 10 * NumDays;
+                double reimbursedTaxiFees = 20 * NumDays;
+                double reimbursedLodgingFees = 95 * NumDays;
+                double reimbursedPrivateVehicleFees = 0.29 * milesDriven;
+
+                double totalAllowableExpenses = reimbursedMealFees 
+                        + reimbursedParkingFees 
+                        + reimbursedTaxiFees 
+                        + reimbursedLodgingFees 
+                        + reimbursedPrivateVehicleFees;
+                
+                double savings;
+                double excess;
+                
+                if (totalAllowableExpenses >= totalExpenses) {
+                    savings = totalAllowableExpenses - totalExpenses;
+                    excess = 0;
+                } else {
+                    savings = 0;
+                    excess = totalExpenses - totalAllowableExpenses;
+                }
+                
+                totalExpensesLabel.setText(
+                        String.format("Total expenses: %.2f$", totalExpenses));
+                allowableExpensesLabel.setText(
+                        String.format("Total allowable expenses: %.2f$"
+                                , totalAllowableExpenses));
+                excessLabel.setText(
+                        String.format("Excess that needs to be paid: %.2f$"
+                                , excess));
+                totalSavingsLabel.setText(
+                        String.format("Amount saved: %.2f$", savings));
             }      
         });
         
