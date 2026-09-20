@@ -1,5 +1,6 @@
 package vanierpatrick.assignment01typingtutor;
 
+import javafx.scene.input.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
@@ -88,6 +89,16 @@ public class App extends Application {
         root.setCenter(keyboard);
         root.setBottom(bottomArea);
         Scene scene = new Scene(root);
+        
+        scene.setOnKeyPressed(e ->{
+            try {
+                KeyboardKeys.valueOf(e.getCode().toString());
+                pressedKey.setText("Pressed Key:" + e.getCode());
+            } catch (IllegalArgumentException exception) {
+                pressedKey.setText("Not handled");
+            }
+        });
+        
         stage.setScene(scene);
         stage.show();
     }
