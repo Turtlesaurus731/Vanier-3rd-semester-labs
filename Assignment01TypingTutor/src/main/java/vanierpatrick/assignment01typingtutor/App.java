@@ -102,16 +102,19 @@ public class App extends Application {
      */
     private void buildKeyboard(GridPane keyboard) {
         Map<KeyboardKeys, Button> keyboardButtons = new HashMap<>();
-        
         int row = 0;
         int column = 0;
         
         for (KeyboardKeys key : KeyboardKeys.values()) {
-            Button button = new Button(key.toString());
-            button.setPrefWidth(50);
+            String keyText = key.toString();
             
+            if (key == KeyboardKeys.PERIOD) {
+                keyText = ".";
+            }
+            
+            Button button = new Button(keyText);
+            button.setPrefWidth(50);
             keyboardButtons.put(key, button);
-
             
             if (key == KeyboardKeys.SHIFT) {
                 button.setPrefWidth(80);
