@@ -7,9 +7,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -22,12 +24,28 @@ public class App extends Application {
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
         GridPane keyboard = new GridPane();
-        
+        VBox textArea = new VBox(10);
+
         keyboard.setHgap(5);
         keyboard.setVgap(5);
         keyboard.setPadding(new Insets(20));
-        BuildKeyboard(keyboard);
+        buildKeyboard(keyboard);
         
+        Label inputLabel = new Label("Text to Type:");
+        TextField inputField = new TextField();
+        Label outputLabel = new Label("What you wrote:");
+        TextField outputField = new TextField();
+        Label pressedKey = new Label("Pressed key:\n");
+        
+        inputField.setEditable(false);
+        outputField.setEditable(false);
+        
+        textArea.getChildren().addAll(
+                inputLabel, inputField,
+                outputLabel, outputField,
+                pressedKey);
+        
+        root.setTop(textArea);
         root.setCenter(keyboard);
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -38,7 +56,11 @@ public class App extends Application {
         launch();
     }
     
-    private void BuildKeyboard(GridPane keyboard) {
+    /**
+     * Use the info stored in KeyboardKeys to build the keyboard layout
+     * @param keyboard the keyboard GridPane in which the keys will be added to
+     */
+    private void buildKeyboard(GridPane keyboard) {
         Map<KeyboardKeys, Button> keyboardButtons = new HashMap<>();
         
         int row = 0;
