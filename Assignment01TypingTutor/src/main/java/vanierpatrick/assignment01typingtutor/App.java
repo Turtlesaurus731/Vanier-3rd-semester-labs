@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -24,8 +26,9 @@ public class App extends Application {
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
         GridPane keyboard = new GridPane();
-        VBox textArea = new VBox(10);
-
+        VBox topArea = new VBox(10);
+        HBox bottomArea = new HBox(100);
+        
         keyboard.setHgap(5);
         keyboard.setVgap(5);
         keyboard.setPadding(new Insets(20));
@@ -35,18 +38,26 @@ public class App extends Application {
         TextField inputField = new TextField();
         Label outputLabel = new Label("What you wrote:");
         TextField outputField = new TextField();
-        Label pressedKey = new Label("Pressed key:\n");
+        Label pressedKey = new Label("Pressed key:");
         
         inputField.setEditable(false);
         outputField.setEditable(false);
         
-        textArea.getChildren().addAll(
+        topArea.getChildren().addAll(
                 inputLabel, inputField,
                 outputLabel, outputField,
                 pressedKey);
         
-        root.setTop(textArea);
+        Button resetButton = new Button("Reset");
+        Button nextButton = new Button("Next");
+        Label counterLabel = new Label("1/6");
+        
+        bottomArea.getChildren().addAll(resetButton, nextButton, counterLabel);
+        bottomArea.setAlignment(Pos.CENTER);
+        
+        root.setTop(topArea);
         root.setCenter(keyboard);
+        root.setBottom(bottomArea);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
