@@ -77,6 +77,13 @@ public class App extends Application {
             }
         });
         
+        resetButton.setOnAction(e -> {
+            currentTextToInput[0] = 0;
+            inputField.setText(textToInput[0]);
+            outputField.clear();
+            counterLabel.setText("1/6");
+        });
+        
         root.setTop(topArea);
         root.setCenter(keyboard);
         root.setBottom(bottomArea);
