@@ -34,12 +34,24 @@ public class App extends Application {
         keyboard.setPadding(new Insets(20));
         buildKeyboard(keyboard);
         
+        String[] textToInput = {
+            "Try typing this text. Do it as quickly and accurately as you can.",
+            "Next type another line of input data.",
+            "The quick brown fox jumps over the lazy dog.",
+            "Five big quacking zephyrs jolt my wax bed.",
+            "Sympathizing would fix Quaker objectives.",
+            "A large fawn jumped quickly over white zinc boxes."
+        };
+        
+        int[] currentTextToInput = {0};
+        
         Label inputLabel = new Label("Text to Type:");
         TextField inputField = new TextField();
         Label outputLabel = new Label("What you wrote:");
         TextField outputField = new TextField();
         Label pressedKey = new Label("Pressed key:");
         
+        inputField.setText(textToInput[0]);
         inputField.setEditable(false);
         outputField.setEditable(false);
         
@@ -54,6 +66,16 @@ public class App extends Application {
         
         bottomArea.getChildren().addAll(resetButton, nextButton, counterLabel);
         bottomArea.setAlignment(Pos.CENTER);
+        
+        nextButton.setOnAction(e -> {
+            if (currentTextToInput[0] < textToInput.length - 1) {
+                currentTextToInput[0]++;
+                inputField.setText(textToInput[currentTextToInput[0]]);
+                outputField.clear();
+                counterLabel.setText(
+                        (currentTextToInput[0] + 1 + "/" + textToInput.length));
+            }
+        });
         
         root.setTop(topArea);
         root.setCenter(keyboard);
