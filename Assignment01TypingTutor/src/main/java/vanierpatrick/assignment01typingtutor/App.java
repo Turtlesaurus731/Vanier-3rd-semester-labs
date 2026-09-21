@@ -101,6 +101,14 @@ public class App extends Application {
                 KeyboardKeys key = KeyboardKeys.valueOf(e.getCode().toString());
                 Button button = keyboardButtons.get(key);
                 
+                if (key == KeyboardKeys.BACK_SPACE) {
+                    if (!outputField.getText().isEmpty()) {
+                        String text = outputField.getText();
+                        outputField.setText(
+                                text.substring(0, text.length() -1));
+                    }
+                }
+                
                 if (!button.getStyleClass().contains("pressed")) {
                     button.getStyleClass().add("pressed");
                 }
@@ -154,6 +162,9 @@ public class App extends Application {
             if (key == KeyboardKeys.PERIOD) {
                 keyText = ".";
             }
+            if (key == KeyboardKeys.BACK_SPACE) {
+                keyText = "Backspace";
+            }
             
             Button button = new Button(keyText);
             button.setFocusTraversable(false);
@@ -167,6 +178,11 @@ public class App extends Application {
             else if (key == KeyboardKeys.SPACE) {
                 button.setPrefWidth(200);
                 keyboard.add(button, 2, 3, 6, 1);
+            }
+            else if (key == KeyboardKeys.BACK_SPACE) {
+                button.setPrefWidth(100);
+                GridPane.setMargin(button, new Insets(0, 0, 0, 6));
+                keyboard.add(button, 6, 3, 2, 1);
             }else {
                 keyboard.add(button, column, row);
                 column++;
