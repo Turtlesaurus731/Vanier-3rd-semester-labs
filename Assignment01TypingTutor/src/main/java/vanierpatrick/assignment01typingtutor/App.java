@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
-    
+
     private Map<KeyboardKeys, Button> keyboardButtons = new HashMap<>();
     
     @Override
@@ -123,6 +123,12 @@ public class App extends Application {
                 
                 button.getStyleClass().remove("pressed");
             } catch (IllegalArgumentException exception) {}
+        });
+        
+        scene.setOnKeyTyped(e -> {
+            String character = e.getCharacter();
+            
+            outputField.appendText(character);
         });
         
         stage.setScene(scene);
