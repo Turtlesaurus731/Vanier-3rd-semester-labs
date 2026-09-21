@@ -22,7 +22,9 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
-
+    
+    private Map<KeyboardKeys, Button> keyboardButtons = new HashMap<>();
+    
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
@@ -75,6 +77,7 @@ public class App extends Application {
                 outputField.clear();
                 counterLabel.setText(
                         (currentTextToInput[0] + 1 + "/" + textToInput.length));
+                root.requestFocus();
             }
         });
         
@@ -83,6 +86,7 @@ public class App extends Application {
             inputField.setText(textToInput[0]);
             outputField.clear();
             counterLabel.setText("1/6");
+            root.requestFocus();
         });
         
         root.setTop(topArea);
@@ -90,17 +94,40 @@ public class App extends Application {
         root.setBottom(bottomArea);
         Scene scene = new Scene(root);
         
+        scene.getStylesheets().add("style.css");
+        
         scene.setOnKeyPressed(e ->{
             try {
-                KeyboardKeys.valueOf(e.getCode().toString());
-                pressedKey.setText("Pressed Key:" + e.getCode());
+                KeyboardKeys key = KeyboardKeys.valueOf(e.getCode().toString());
+                Button button = keyboardButtons.get(key);
+                
+                if (!button.getStyleClass().contains("pressed")) {
+                    button.getStyleClass().add("pressed");
+                }
+                pressedKey.getStyleClass().remove("not-handled");
+                
+                pressedKey.setText("Pressed Key: " + e.getCode());
             } catch (IllegalArgumentException exception) {
-                pressedKey.setText("Not handled");
+                pressedKey.setText("Not handled.");
+                
+                if (!pressedKey.getStyleClass().contains("not-handled")) {
+                    pressedKey.getStyleClass().add("not-handled");
+                }
             }
+        });
+        
+        scene.setOnKeyReleased(e -> {
+            try {
+                KeyboardKeys key = KeyboardKeys.valueOf(e.getCode().toString());
+                Button button = keyboardButtons.get(key);
+                
+                button.getStyleClass().remove("pressed");
+            } catch (IllegalArgumentException exception) {}
         });
         
         stage.setScene(scene);
         stage.show();
+        root.requestFocus();
     }
 
     public static void main(String[] args) {
@@ -112,7 +139,6 @@ public class App extends Application {
      * @param keyboard the keyboard GridPane in which the keys will be added to
      */
     private void buildKeyboard(GridPane keyboard) {
-        Map<KeyboardKeys, Button> keyboardButtons = new HashMap<>();
         int row = 0;
         int column = 0;
         
@@ -124,6 +150,7 @@ public class App extends Application {
             }
             
             Button button = new Button(keyText);
+            button.setFocusTraversable(false);
             button.setPrefWidth(50);
             keyboardButtons.put(key, button);
             
