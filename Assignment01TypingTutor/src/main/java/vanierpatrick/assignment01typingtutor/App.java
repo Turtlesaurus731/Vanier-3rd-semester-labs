@@ -1,0 +1,247 @@
+package vanierpatrick.assignment01typingtutor;
+
+import javafx.scene.input.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+
+/**
+ * JavaFX App
+ * 
+ * @author patrick tran
+ */
+public class App extends Application {
+
+    private Map<KeyboardKeys, Button> keyboardButtons = new HashMap<>();
+    
+    @Override
+    public void start(Stage stage) {
+        BorderPane root = new BorderPane();
+        GridPane keyboard = new GridPane();
+        VBox topArea = new VBox(10);
+        HBox bottomArea = new HBox(100);
+        
+        keyboard.setHgap(5);
+        keyboard.setVgap(5);
+        keyboard.setPadding(new Insets(20));
+        buildKeyboard(keyboard);
+        
+        String[] textToInput = {
+            "Try typing this text. Do it as quickly and accurately as you can.",
+            "Next type another line of input data.",
+            "The quick brown fox jumps over the lazy dog.",
+            "Five big quacking zephyrs jolt my wax bed.",
+            "Sympathizing would fix Quaker objectives.",
+            "A large fawn jumped quickly over white zinc boxes."
+        };
+        
+        int[] currentTextToInput = {0};
+        
+        Label inputLabel = new Label("Text to Type:");
+        TextField inputField = new TextField();
+        Label outputLabel = new Label("What you wrote:");
+        TextField outputField = new TextField();
+        Label pressedKey = new Label("Pressed key:");
+        
+        inputField.setText(textToInput[0]);
+        inputField.setEditable(false);
+        outputField.setEditable(false);
+        
+        topArea.getChildren().addAll(
+                inputLabel, inputField,
+                outputLabel, outputField,
+                pressedKey);
+        
+        Button resetButton = new Button("Reset");
+        Button nextButton = new Button("Next");
+        Label counterLabel = new Label("1/6");
+        Label correctLabel = new Label("Correct: 0");
+        Label incorrectLabel = new Label("Incorrect: 0");
+        
+        bottomArea.getChildren().addAll(resetButton, nextButton, counterLabel, 
+                correctLabel, incorrectLabel);
+        bottomArea.setAlignment(Pos.CENTER);
+        
+        nextButton.setOnAction(e -> {
+            if (currentTextToInput[0] < textToInput.length - 1) {
+                currentTextToInput[0]++;
+                inputField.setText(textToInput[currentTextToInput[0]]);
+                outputField.clear();
+                
+                outputCheck(
+                    correctLabel, incorrectLabel,
+                    inputField.getText(), outputField.getText());
+                
+                counterLabel.setText(
+                        (currentTextToInput[0] + 1 + "/" + textToInput.length));
+                root.requestFocus();
+            }
+        });
+        
+        resetButton.setOnAction(e -> {
+            currentTextToInput[0] = 0;
+            inputField.setText(textToInput[0]);
+            outputField.clear();
+            
+            outputCheck(
+                    correctLabel, incorrectLabel,
+                    inputField.getText(), outputField.getText());
+            
+            counterLabel.setText("1/6");
+            root.requestFocus();
+        });
+        
+        root.setTop(topArea);
+        root.setCenter(keyboard);
+        root.setBottom(bottomArea);
+        Scene scene = new Scene(root, 700, 500);
+        
+        scene.getStylesheets().add("style.css");
+        
+        scene.setOnKeyPressed(e ->{
+            try {
+                KeyboardKeys key = KeyboardKeys.valueOf(e.getCode().toString());
+                Button button = keyboardButtons.get(key);
+                
+                if (key == KeyboardKeys.BACK_SPACE) {
+                    if (!outputField.getText().isEmpty()) {
+                        String text = outputField.getText();
+                        outputField.setText(
+                                text.substring(0, text.length() -1));
+                    }
+                }
+                
+                if (!button.getStyleClass().contains("pressed")) {
+                    button.getStyleClass().add("pressed");
+                }
+                pressedKey.getStyleClass().remove("not-handled");
+                
+                pressedKey.setText("Pressed Key: " + e.getCode());
+            } catch (IllegalArgumentException exception) {
+                pressedKey.setText("Not handled.");
+                
+                if (!pressedKey.getStyleClass().contains("not-handled")) {
+                    pressedKey.getStyleClass().add("not-handled");
+                }
+            }
+        });
+        
+        scene.setOnKeyReleased(e -> {
+            try {
+                KeyboardKeys key = KeyboardKeys.valueOf(e.getCode().toString());
+                Button button = keyboardButtons.get(key);
+                
+                button.getStyleClass().remove("pressed");
+            } catch (IllegalArgumentException exception) {}
+        });
+        
+        scene.setOnKeyTyped(e -> {
+            String character = e.getCharacter();
+            outputField.appendText(character);
+                        
+            outputCheck(
+                    correctLabel, incorrectLabel,
+                    inputField.getText(), outputField.getText());
+        });
+        
+        stage.setScene(scene);
+        stage.show();
+        root.requestFocus();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+    
+    /**
+     * Use the info stored in KeyboardKeys to build the keyboard layout
+     * @param keyboard the keyboard GridPane in which the keys will be added to
+     */
+    private void buildKeyboard(GridPane keyboard) {
+        int row = 0;
+        int column = 0;
+        
+        for (KeyboardKeys key : KeyboardKeys.values()) {
+            String keyText = key.toString();
+            
+            if (key == KeyboardKeys.PERIOD) {
+                keyText = ".";
+            }
+            if (key == KeyboardKeys.BACK_SPACE) {
+                keyText = "Backspace";
+            }
+            
+            Button button = new Button(keyText);
+            button.setFocusTraversable(false);
+            button.setPrefWidth(50);
+            keyboardButtons.put(key, button);
+            
+            if (key == KeyboardKeys.SHIFT) {
+                button.setPrefWidth(80);
+                keyboard.add(button, 0, 3, 2, 1);
+            } 
+            else if (key == KeyboardKeys.SPACE) {
+                button.setPrefWidth(200);
+                keyboard.add(button, 2, 3, 6, 1);
+            }
+            else if (key == KeyboardKeys.BACK_SPACE) {
+                button.setPrefWidth(100);
+                GridPane.setMargin(button, new Insets(0, 0, 0, 6));
+                keyboard.add(button, 6, 3, 2, 1);
+            }else {
+                keyboard.add(button, column, row);
+                column++;
+
+                if (row == 0 && column == 10) {
+                    row++;
+                    column = 0;
+                } 
+                else if (row == 1 && column == 9) {
+                    row++;
+                    column = 0;
+                }
+            }    
+        }
+    }
+    
+    /**
+     * Compares what the user wrote to the expected input field, 
+     * tally up the correct/incorrect characters 
+     * and update the labels accordingly
+     * @param correctLabel the label displaying the number of correct characters
+     * @param incorrectLabel the label displaying the number of incorrect chars
+     * @param expectedInput what the user is expected to write
+     * @param currentOutput what the user has written in the output field
+     */
+    private void outputCheck(Label correctLabel, Label incorrectLabel,
+            String expectedInput, String currentOutput) {
+        
+        int correct = 0;
+        int incorrect = 0;
+        
+        for  (int i = 0; i < currentOutput.length(); i++) {
+            if (i < expectedInput.length() && currentOutput.charAt(i) 
+                    == expectedInput.charAt(i)) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        }
+        
+        correctLabel.setText("Correct: " + correct);
+        incorrectLabel.setText("Incorrect: " + incorrect);
+    }
+}
