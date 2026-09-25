@@ -78,6 +78,11 @@ public class App extends Application {
                 currentTextToInput[0]++;
                 inputField.setText(textToInput[currentTextToInput[0]]);
                 outputField.clear();
+                
+                outputCheck(
+                    correctLabel, incorrectLabel,
+                    inputField.getText(), outputField.getText());
+                
                 counterLabel.setText(
                         (currentTextToInput[0] + 1 + "/" + textToInput.length));
                 root.requestFocus();
@@ -88,6 +93,11 @@ public class App extends Application {
             currentTextToInput[0] = 0;
             inputField.setText(textToInput[0]);
             outputField.clear();
+            
+            outputCheck(
+                    correctLabel, incorrectLabel,
+                    inputField.getText(), outputField.getText());
+            
             counterLabel.setText("1/6");
             root.requestFocus();
         });
@@ -95,7 +105,7 @@ public class App extends Application {
         root.setTop(topArea);
         root.setCenter(keyboard);
         root.setBottom(bottomArea);
-        Scene scene = new Scene(root, 900, 500);
+        Scene scene = new Scene(root, 700, 500);
         
         scene.getStylesheets().add("style.css");
         
@@ -139,7 +149,7 @@ public class App extends Application {
         scene.setOnKeyTyped(e -> {
             String character = e.getCharacter();
             outputField.appendText(character);
-            
+                        
             outputCheck(
                     correctLabel, incorrectLabel,
                     inputField.getText(), outputField.getText());
