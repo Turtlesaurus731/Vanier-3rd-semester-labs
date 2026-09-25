@@ -66,8 +66,11 @@ public class App extends Application {
         Button resetButton = new Button("Reset");
         Button nextButton = new Button("Next");
         Label counterLabel = new Label("1/6");
+        Label correctLabel = new Label("Correct: 0");
+        Label incorrectLabel = new Label("Incorrect: 0");
         
-        bottomArea.getChildren().addAll(resetButton, nextButton, counterLabel);
+        bottomArea.getChildren().addAll(resetButton, nextButton, counterLabel, 
+                correctLabel, incorrectLabel);
         bottomArea.setAlignment(Pos.CENTER);
         
         nextButton.setOnAction(e -> {
@@ -92,7 +95,7 @@ public class App extends Application {
         root.setTop(topArea);
         root.setCenter(keyboard);
         root.setBottom(bottomArea);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 900, 500);
         
         scene.getStylesheets().add("style.css");
         
@@ -135,8 +138,11 @@ public class App extends Application {
         
         scene.setOnKeyTyped(e -> {
             String character = e.getCharacter();
-            
             outputField.appendText(character);
+            
+            outputCheck(
+                    correctLabel, incorrectLabel,
+                    inputField.getText(), outputField.getText());
         });
         
         stage.setScene(scene);
@@ -197,5 +203,33 @@ public class App extends Application {
                 }
             }    
         }
+    }
+    
+    /**
+     * Compares what the user wrote to the expected input field, 
+     * tally up the correct/incorrect characters 
+     * and update the labels accordingly
+     * @param correctLabel the label displaying the number of correct characters
+     * @param incorrectLabel the label displaying the number of incorrect chars
+     * @param expectedInput what the user is expected to write
+     * @param currentOutput what the user has written in the output field
+     */
+    private void outputCheck(Label correctLabel, Label incorrectLabel,
+            String expectedInput, String currentOutput) {
+        
+        int correct = 0;
+        int incorrect = 0;
+        
+        for  (int i = 0; i < currentOutput.length(); i++) {
+            if (i < expectedInput.length() && currentOutput.charAt(i) 
+                    == expectedInput.charAt(i)) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        }
+        
+        correctLabel.setText("Correct: " + correct);
+        incorrectLabel.setText("Incorrect: " + incorrect);
     }
 }
