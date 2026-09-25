@@ -9,7 +9,7 @@ import javafx.scene.shape.QuadCurve;
 
 /**
  *
- * @author patri
+ * @author patrick tran
  */
 public enum KeyboardKeys {
     Q, W, E, R, T, Y, U, I, O, P,

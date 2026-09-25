@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
+ * 
+ * @author patrick tran
  */
 public class App extends Application {
 
