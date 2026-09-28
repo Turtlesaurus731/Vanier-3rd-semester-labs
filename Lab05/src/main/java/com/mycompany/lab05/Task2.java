@@ -7,8 +7,11 @@ package com.mycompany.lab05;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -22,12 +25,16 @@ public class Task2 extends Application{
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
         GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setPadding(new Insets(20));
         
-        String[] category = {"Beverage", "Appetizer", "Main Course", "Dessert"};
+        String[] category = {"Beverage: ", "Appetizer: ", "Main Course: ", "Dessert: "};
         Map<String, Double> beverageMap = new LinkedHashMap<>();
         Map<String, Double> appetizerMap = new LinkedHashMap<>();
         Map<String, Double> mainCourseMap = new LinkedHashMap<>();
-        Map<String, Double> desserMap = new LinkedHashMap<>();
+        Map<String, Double> dessertMap = new LinkedHashMap<>();
         
         beverageMap.put("Coffee", 2.50);
         beverageMap.put("Tea", 2.00);
@@ -50,21 +57,37 @@ public class Task2 extends Application{
         mainCourseMap.put("Pasta", 11.75);
         mainCourseMap.put("Fish and Chips", 12.25);
         
-        desserMap.put("Apple Pie", 5.95);
-        desserMap.put("Carrot Cake", 4.50);
-        desserMap.put("Mud Pie", 4.75);
-        desserMap.put("Pudding", 3.25);
-        desserMap.put("Apple Crisp", 5.98);
+        dessertMap.put("Apple Pie", 5.95);
+        dessertMap.put("Carrot Cake", 4.50);
+        dessertMap.put("Mud Pie", 4.75);
+        dessertMap.put("Pudding", 3.25);
+        dessertMap.put("Apple Crisp", 5.98);
         
-        ComboBox beverageBox = new ComboBox();
-        ComboBox appetizerBox = new ComboBox();
-        ComboBox mainCourseBox = new ComboBox();
-        ComboBox dessetBox = new ComboBox();
+        ComboBox<String> beverageBox = new ComboBox();
+        ComboBox<String> appetizerBox = new ComboBox();
+        ComboBox<String> mainCourseBox = new ComboBox();
+        ComboBox<String> dessertBox = new ComboBox();
+        beverageBox.setPrefWidth(150);
+        appetizerBox.setPrefWidth(150);
+        mainCourseBox.setPrefWidth(150);
+        dessertBox.setPrefWidth(150);
+        
+        beverageBox.getItems().addAll(beverageMap.keySet());
+        appetizerBox.getItems().addAll(appetizerMap.keySet());
+        mainCourseBox.getItems().addAll(mainCourseMap.keySet());
+        dessertBox.getItems().addAll(dessertMap.keySet());
+        
         
         for (int i = 0; i < category.length; i++) {
-            
+            gridPane.add(new Label(category[i]), i, 0);
         }
         
+        gridPane.add(beverageBox, 0, 1);
+        gridPane.add(appetizerBox, 1, 1);
+        gridPane.add(mainCourseBox, 2, 1);
+        gridPane.add(dessertBox, 3, 1);
+        
+        root.setCenter(gridPane);
         Scene scene = new Scene(root, 700, 500);
         stage.setScene(scene);
         stage.show();
