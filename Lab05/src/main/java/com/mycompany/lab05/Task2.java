@@ -24,6 +24,18 @@ import javafx.stage.Stage;
  * @author 2584955
  */
 public class Task2 extends Application{
+    private ComboBox<String> beverageBox;
+    private ComboBox<String> appetizerBox;
+    private ComboBox<String> mainCourseBox;
+    private ComboBox<String> dessertBox;
+    private Map<String, Double> beverageMap = new LinkedHashMap<>();
+    private Map<String, Double> appetizerMap = new LinkedHashMap<>();
+    private Map<String, Double> mainCourseMap = new LinkedHashMap<>();
+    private Map<String, Double> dessertMap = new LinkedHashMap<>();
+    private Slider tipSlider;
+
+    private final double TAX_RATE = 0.14975;
+    
     @Override
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
@@ -39,11 +51,7 @@ public class Task2 extends Application{
         
         final double TAX_RATE = 0.14975;
         String[] category = {"Beverage: ", "Appetizer: ", "Main Course: ", "Dessert: "};
-        Map<String, Double> beverageMap = new LinkedHashMap<>();
-        Map<String, Double> appetizerMap = new LinkedHashMap<>();
-        Map<String, Double> mainCourseMap = new LinkedHashMap<>();
-        Map<String, Double> dessertMap = new LinkedHashMap<>();
-        
+
         beverageMap.put("None", 0.00);
         beverageMap.put("Coffee", 2.50);
         beverageMap.put("Tea", 2.00);
@@ -75,10 +83,11 @@ public class Task2 extends Application{
         dessertMap.put("Pudding", 3.25);
         dessertMap.put("Apple Crisp", 5.98);
         
-        ComboBox<String> beverageBox = new ComboBox();
-        ComboBox<String> appetizerBox = new ComboBox();
-        ComboBox<String> mainCourseBox = new ComboBox();
-        ComboBox<String> dessertBox = new ComboBox();
+        beverageBox = new ComboBox<>();
+        appetizerBox = new ComboBox<>();
+        mainCourseBox = new ComboBox<>();
+        dessertBox = new ComboBox<>();
+        
         beverageBox.setPrefWidth(150);
         appetizerBox.setPrefWidth(150);
         mainCourseBox.setPrefWidth(150);
@@ -88,8 +97,7 @@ public class Task2 extends Application{
         appetizerBox.getItems().addAll(appetizerMap.keySet());
         mainCourseBox.getItems().addAll(mainCourseMap.keySet());
         dessertBox.getItems().addAll(dessertMap.keySet());
-        
-        
+         
         for (int i = 0; i < category.length; i++) {
             gridPane.add(new Label(category[i]), i, 0);
         }
@@ -108,7 +116,7 @@ public class Task2 extends Application{
         Label tipLabel = new Label("0.00$");
         Label totaLabel = new Label("0.00$");
         
-        Slider tipSlider = new Slider(0, 20, 0);
+        tipSlider = new Slider(0, 20, 0);
         tipSlider.setShowTickLabels(true);
         tipSlider.setShowTickMarks(true);
         tipSlider.setPrefWidth(400);
@@ -127,100 +135,29 @@ public class Task2 extends Application{
         bottomArea.add(tipSlider, 1, 4);
         bottomArea.add(clearButton, 1, 5);
         
-        beverageBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            double subtotalValue = 0.0;
-
-            if (beverageBox.getValue() != null) {
-                subtotalValue 
-                        += beverageMap.get(beverageBox.getValue());
-            }
-            if (appetizerBox.getValue() != null) {
-                subtotalValue 
-                        += appetizerMap.get(appetizerBox.getValue());
-            }
-            if (mainCourseBox.getValue() != null) {
-                subtotalValue 
-                        += mainCourseMap.get(mainCourseBox.getValue());
-            }
-            if (dessertBox.getValue() != null) {
-                subtotalValue 
-                        += dessertMap.get(dessertBox.getValue());
-            }
-            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
-            double taxValue = subtotalValue * TAX_RATE;
-            taxLabel.setText(String.format("%.2f", taxValue));
+        beverageBox.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    updateBill(subtotalLabel, taxLabel, tipLabel);
         });
         
-        appetizerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            double subtotalValue = 0.0;
-
-            if (beverageBox.getValue() != null) {
-                subtotalValue 
-                        += beverageMap.get(beverageBox.getValue());
-            }
-            if (appetizerBox.getValue() != null) {
-                subtotalValue 
-                        += appetizerMap.get(appetizerBox.getValue());
-            }
-            if (mainCourseBox.getValue() != null) {
-                subtotalValue 
-                        += mainCourseMap.get(mainCourseBox.getValue());
-            }
-            if (dessertBox.getValue() != null) {
-                subtotalValue 
-                        += dessertMap.get(dessertBox.getValue());
-            }
-            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
-            double taxValue = subtotalValue * TAX_RATE;
-            taxLabel.setText(String.format("%.2f", taxValue));
+        appetizerBox.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    updateBill(subtotalLabel, taxLabel, tipLabel);
         });
         
-        mainCourseBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            double subtotalValue = 0.0;
-
-            if (beverageBox.getValue() != null) {
-                subtotalValue 
-                        += beverageMap.get(beverageBox.getValue());
-            }
-            if (appetizerBox.getValue() != null) {
-                subtotalValue 
-                        += appetizerMap.get(appetizerBox.getValue());
-            }
-            if (mainCourseBox.getValue() != null) {
-                subtotalValue 
-                        += mainCourseMap.get(mainCourseBox.getValue());
-            }
-            if (dessertBox.getValue() != null) {
-                subtotalValue 
-                        += dessertMap.get(dessertBox.getValue());
-            }
-            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
-            double taxValue = subtotalValue * TAX_RATE;
-            taxLabel.setText(String.format("%.2f", taxValue));
+        mainCourseBox.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    updateBill(subtotalLabel, taxLabel, tipLabel);
         });
         
-        dessertBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            double subtotalValue = 0.0;
-
-            if (beverageBox.getValue() != null) {
-                subtotalValue 
-                        += beverageMap.get(beverageBox.getValue());
-            }
-            if (appetizerBox.getValue() != null) {
-                subtotalValue 
-                        += appetizerMap.get(appetizerBox.getValue());
-            }
-            if (mainCourseBox.getValue() != null) {
-                subtotalValue 
-                        += mainCourseMap.get(mainCourseBox.getValue());
-            }
-            if (dessertBox.getValue() != null) {
-                subtotalValue 
-                        += dessertMap.get(dessertBox.getValue());
-            }
-            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
-            double taxValue = subtotalValue * TAX_RATE;
-            taxLabel.setText(String.format("%.2f", taxValue));
+        dessertBox.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    updateBill(subtotalLabel, taxLabel, tipLabel);
+        });
+        
+        tipSlider.valueProperty().addListener(
+                (observable, oldValu, newValue) -> {
+                    updateBill(subtotalLabel, taxLabel, tipLabel);
         });
         
         root.setCenter(gridPane);
@@ -232,5 +169,44 @@ public class Task2 extends Application{
     
     public static void main(String[] args) {
         launch();
+    }
+    
+    /**
+     * Calculates the subtotal from the selected foods 
+     * @return the subtotal
+     */
+    private double calculateSubtotal() {
+        double subtotalValue = 0.0;
+
+        if (beverageBox.getValue() != null) {
+            subtotalValue += beverageMap.get(beverageBox.getValue());
+        }
+        if (appetizerBox.getValue() != null) {
+            subtotalValue += appetizerMap.get(appetizerBox.getValue());
+        }
+        if (mainCourseBox.getValue() != null) {
+            subtotalValue += mainCourseMap.get(mainCourseBox.getValue());
+        }
+        if (dessertBox.getValue() != null) {
+            subtotalValue += dessertMap.get(dessertBox.getValue());
+        }
+        return subtotalValue;
+    }
+    
+    /**
+     * Updates the subtotal, tax label and tip label
+     * @param subtotalLabel the label used to display the current subtotal
+     * @param taxLabel the label used to display the current tax
+     * @param tipLabel the label used to display the current tip
+     */
+    private void  updateBill(Label subtotalLabel, Label taxLabel, Label tipLabel) {
+        double subtotalValue = calculateSubtotal();
+        double taxValue = subtotalValue * TAX_RATE;
+        double tipPercentage = tipSlider.getValue();
+        double tipValue = subtotalValue * (tipPercentage / 100);
+
+        subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+        taxLabel.setText(String.format("%.2f$", taxValue));
+        tipLabel.setText(String.format("%.2f$", tipValue));
     }
 }
