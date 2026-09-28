@@ -48,8 +48,7 @@ public class Task2 extends Application{
         bottomArea.setHgap(10);
         bottomArea.setVgap(10);
         bottomArea.setPadding(new Insets(10));
-        
-        final double TAX_RATE = 0.14975;
+     
         String[] category = {"Beverage: ", "Appetizer: ", "Main Course: ", "Dessert: "};
 
         beverageMap.put("None", 0.00);
@@ -114,7 +113,7 @@ public class Task2 extends Application{
         Label subtotalLabel = new Label("0.00$");
         Label taxLabel = new Label("0.00$");
         Label tipLabel = new Label("0.00$");
-        Label totaLabel = new Label("0.00$");
+        Label totalLabel = new Label("0.00$");
         
         tipSlider = new Slider(0, 20, 0);
         tipSlider.setShowTickLabels(true);
@@ -130,34 +129,34 @@ public class Task2 extends Application{
         bottomArea.add(tip, 0, 2);
         bottomArea.add(tipLabel, 1, 2);
         bottomArea.add(total, 0, 3);
-        bottomArea.add(totaLabel, 1, 3);
+        bottomArea.add(totalLabel, 1, 3);
         bottomArea.add(new Label("Tip in %: "), 0, 4);
         bottomArea.add(tipSlider, 1, 4);
         bottomArea.add(clearButton, 1, 5);
         
         beverageBox.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    updateBill(subtotalLabel, taxLabel, tipLabel);
+                    updateBill(subtotalLabel, taxLabel, tipLabel, totalLabel);
         });
         
         appetizerBox.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    updateBill(subtotalLabel, taxLabel, tipLabel);
+                    updateBill(subtotalLabel, taxLabel, tipLabel, totalLabel);
         });
         
         mainCourseBox.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    updateBill(subtotalLabel, taxLabel, tipLabel);
+                    updateBill(subtotalLabel, taxLabel, tipLabel, totalLabel);
         });
         
         dessertBox.valueProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    updateBill(subtotalLabel, taxLabel, tipLabel);
+                    updateBill(subtotalLabel, taxLabel, tipLabel, totalLabel);
         });
         
         tipSlider.valueProperty().addListener(
                 (observable, oldValu, newValue) -> {
-                    updateBill(subtotalLabel, taxLabel, tipLabel);
+                    updateBill(subtotalLabel, taxLabel, tipLabel, totalLabel);
         });
         
         root.setCenter(gridPane);
@@ -198,15 +197,22 @@ public class Task2 extends Application{
      * @param subtotalLabel the label used to display the current subtotal
      * @param taxLabel the label used to display the current tax
      * @param tipLabel the label used to display the current tip
+     * @param totalLabel the label used to display the current total
      */
-    private void  updateBill(Label subtotalLabel, Label taxLabel, Label tipLabel) {
-        double subtotalValue = calculateSubtotal();
-        double taxValue = subtotalValue * TAX_RATE;
-        double tipPercentage = tipSlider.getValue();
-        double tipValue = subtotalValue * (tipPercentage / 100);
+    private void updateBill(
+            Label subtotalLabel,
+            Label taxLabel,
+            Label tipLabel,
+            Label totalLabel) {
+                double subtotalValue = calculateSubtotal();
+                double taxValue = subtotalValue * TAX_RATE;
+                double tipPercentage = tipSlider.getValue();
+                double tipValue = subtotalValue * (tipPercentage / 100);
+                double totalValue = subtotalValue + taxValue + tipValue;
 
-        subtotalLabel.setText(String.format("%.2f$", subtotalValue));
-        taxLabel.setText(String.format("%.2f$", taxValue));
-        tipLabel.setText(String.format("%.2f$", tipValue));
+                subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+                taxLabel.setText(String.format("%.2f$", taxValue));
+                tipLabel.setText(String.format("%.2f$", tipValue));
+                totalLabel.setText(String.format("%.2f$", totalValue));
     }
 }
