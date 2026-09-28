@@ -37,6 +37,7 @@ public class Task2 extends Application{
         bottomArea.setVgap(10);
         bottomArea.setPadding(new Insets(10));
         
+        final double TAX_RATE = 0.14975;
         String[] category = {"Beverage: ", "Appetizer: ", "Main Course: ", "Dessert: "};
         Map<String, Double> beverageMap = new LinkedHashMap<>();
         Map<String, Double> appetizerMap = new LinkedHashMap<>();
@@ -146,6 +147,8 @@ public class Task2 extends Application{
                         += dessertMap.get(dessertBox.getValue());
             }
             subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+            double taxValue = subtotalValue * TAX_RATE;
+            taxLabel.setText(String.format("%.2f", taxValue));
         });
         
         appetizerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -168,6 +171,8 @@ public class Task2 extends Application{
                         += dessertMap.get(dessertBox.getValue());
             }
             subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+            double taxValue = subtotalValue * TAX_RATE;
+            taxLabel.setText(String.format("%.2f", taxValue));
         });
         
         mainCourseBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -190,6 +195,8 @@ public class Task2 extends Application{
                         += dessertMap.get(dessertBox.getValue());
             }
             subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+            double taxValue = subtotalValue * TAX_RATE;
+            taxLabel.setText(String.format("%.2f", taxValue));
         });
         
         dessertBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -212,6 +219,8 @@ public class Task2 extends Application{
                         += dessertMap.get(dessertBox.getValue());
             }
             subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+            double taxValue = subtotalValue * TAX_RATE;
+            taxLabel.setText(String.format("%.2f", taxValue));
         });
         
         root.setCenter(gridPane);
