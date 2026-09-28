@@ -159,6 +159,18 @@ public class Task2 extends Application{
                     updateBill(subtotalLabel, taxLabel, tipLabel, totalLabel);
         });
         
+        clearButton.setOnAction(e -> {
+            beverageBox.setValue("None");
+            appetizerBox.setValue("None");
+            mainCourseBox.setValue("None");
+            dessertBox.setValue("None");
+            tipSlider.setValue(0);
+            subtotalLabel.setText("0.00$");
+            taxLabel.setText("0.00$");
+            tipLabel.setText("0.00$");
+            totalLabel.setText("0.00$");
+        });
+        
         root.setCenter(gridPane);
         root.setBottom(bottomArea);
         Scene scene = new Scene(root, 700, 500);
