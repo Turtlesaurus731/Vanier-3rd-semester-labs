@@ -43,6 +43,7 @@ public class Task2 extends Application{
         Map<String, Double> mainCourseMap = new LinkedHashMap<>();
         Map<String, Double> dessertMap = new LinkedHashMap<>();
         
+        beverageMap.put("None", 0.00);
         beverageMap.put("Coffee", 2.50);
         beverageMap.put("Tea", 2.00);
         beverageMap.put("Soft Drink", 1.75);
@@ -50,12 +51,14 @@ public class Task2 extends Application{
         beverageMap.put("Milk", 1.50);
         beverageMap.put("Juice", 2.50);
         
+        appetizerMap.put("None", 0.00);
         appetizerMap.put("Soup", 4.50);
         appetizerMap.put("Salad", 3.75);
         appetizerMap.put("Spring Rolls", 5.25);
         appetizerMap.put("Garlic Bread", 3.00);
         appetizerMap.put("Chips and Salsa", 6.95);
         
+        mainCourseMap.put("None", 0.00);
         mainCourseMap.put("Steak", 15.00);
         mainCourseMap.put("Grilled Chicken", 13.50);
         mainCourseMap.put("Chicken Alfredo", 13.95);
@@ -64,6 +67,7 @@ public class Task2 extends Application{
         mainCourseMap.put("Pasta", 11.75);
         mainCourseMap.put("Fish and Chips", 12.25);
         
+        dessertMap.put("None", 0.00);
         dessertMap.put("Apple Pie", 5.95);
         dessertMap.put("Carrot Cake", 4.50);
         dessertMap.put("Mud Pie", 4.75);
@@ -121,6 +125,94 @@ public class Task2 extends Application{
         bottomArea.add(new Label("Tip in %: "), 0, 4);
         bottomArea.add(tipSlider, 1, 4);
         bottomArea.add(clearButton, 1, 5);
+        
+        beverageBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double subtotalValue = 0.0;
+
+            if (beverageBox.getValue() != null) {
+                subtotalValue 
+                        += beverageMap.get(beverageBox.getValue());
+            }
+            if (appetizerBox.getValue() != null) {
+                subtotalValue 
+                        += appetizerMap.get(appetizerBox.getValue());
+            }
+            if (mainCourseBox.getValue() != null) {
+                subtotalValue 
+                        += mainCourseMap.get(mainCourseBox.getValue());
+            }
+            if (dessertBox.getValue() != null) {
+                subtotalValue 
+                        += dessertMap.get(dessertBox.getValue());
+            }
+            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+        });
+        
+        appetizerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double subtotalValue = 0.0;
+
+            if (beverageBox.getValue() != null) {
+                subtotalValue 
+                        += beverageMap.get(beverageBox.getValue());
+            }
+            if (appetizerBox.getValue() != null) {
+                subtotalValue 
+                        += appetizerMap.get(appetizerBox.getValue());
+            }
+            if (mainCourseBox.getValue() != null) {
+                subtotalValue 
+                        += mainCourseMap.get(mainCourseBox.getValue());
+            }
+            if (dessertBox.getValue() != null) {
+                subtotalValue 
+                        += dessertMap.get(dessertBox.getValue());
+            }
+            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+        });
+        
+        mainCourseBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double subtotalValue = 0.0;
+
+            if (beverageBox.getValue() != null) {
+                subtotalValue 
+                        += beverageMap.get(beverageBox.getValue());
+            }
+            if (appetizerBox.getValue() != null) {
+                subtotalValue 
+                        += appetizerMap.get(appetizerBox.getValue());
+            }
+            if (mainCourseBox.getValue() != null) {
+                subtotalValue 
+                        += mainCourseMap.get(mainCourseBox.getValue());
+            }
+            if (dessertBox.getValue() != null) {
+                subtotalValue 
+                        += dessertMap.get(dessertBox.getValue());
+            }
+            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+        });
+        
+        dessertBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double subtotalValue = 0.0;
+
+            if (beverageBox.getValue() != null) {
+                subtotalValue 
+                        += beverageMap.get(beverageBox.getValue());
+            }
+            if (appetizerBox.getValue() != null) {
+                subtotalValue 
+                        += appetizerMap.get(appetizerBox.getValue());
+            }
+            if (mainCourseBox.getValue() != null) {
+                subtotalValue 
+                        += mainCourseMap.get(mainCourseBox.getValue());
+            }
+            if (dessertBox.getValue() != null) {
+                subtotalValue 
+                        += dessertMap.get(dessertBox.getValue());
+            }
+            subtotalLabel.setText(String.format("%.2f$", subtotalValue));
+        });
         
         root.setCenter(gridPane);
         root.setBottom(bottomArea);
