@@ -10,10 +10,13 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -25,10 +28,14 @@ public class Task2 extends Application{
     public void start(Stage stage) {
         BorderPane root = new BorderPane();
         GridPane gridPane = new GridPane();
-        gridPane.setAlignment(Pos.CENTER);
+        GridPane bottomArea = new GridPane();
+        gridPane.setAlignment(Pos.TOP_CENTER);
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.setPadding(new Insets(20));
+        bottomArea.setHgap(10);
+        bottomArea.setVgap(10);
+        bottomArea.setPadding(new Insets(10));
         
         String[] category = {"Beverage: ", "Appetizer: ", "Main Course: ", "Dessert: "};
         Map<String, Double> beverageMap = new LinkedHashMap<>();
@@ -87,7 +94,36 @@ public class Task2 extends Application{
         gridPane.add(mainCourseBox, 2, 1);
         gridPane.add(dessertBox, 3, 1);
         
+        Label subtotal = new Label("Subtotal:");
+        Label tax = new Label("Tax:");
+        Label tip = new Label("Tip:");
+        Label total = new Label("Total:");
+        Label subtotalLabel = new Label("0.00$");
+        Label taxLabel = new Label("0.00$");
+        Label tipLabel = new Label("0.00$");
+        Label totaLabel = new Label("0.00$");
+        
+        Slider tipSlider = new Slider(0, 20, 0);
+        tipSlider.setShowTickLabels(true);
+        tipSlider.setShowTickMarks(true);
+        tipSlider.setPrefWidth(400);
+        
+        Button clearButton = new Button("Clear");
+           
+        bottomArea.add(subtotal, 0, 0);
+        bottomArea.add(subtotalLabel, 1, 0);
+        bottomArea.add(tax, 0, 1);
+        bottomArea.add(taxLabel, 1, 1);
+        bottomArea.add(tip, 0, 2);
+        bottomArea.add(tipLabel, 1, 2);
+        bottomArea.add(total, 0, 3);
+        bottomArea.add(totaLabel, 1, 3);
+        bottomArea.add(new Label("Tip in %: "), 0, 4);
+        bottomArea.add(tipSlider, 1, 4);
+        bottomArea.add(clearButton, 1, 5);
+        
         root.setCenter(gridPane);
+        root.setBottom(bottomArea);
         Scene scene = new Scene(root, 700, 500);
         stage.setScene(scene);
         stage.show();
