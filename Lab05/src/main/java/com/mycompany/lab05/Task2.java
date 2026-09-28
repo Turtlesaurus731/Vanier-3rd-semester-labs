@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author 2584955
+ * @author Patrick Huy The Tran
  */
 public class Task2 extends Application{
     private ComboBox<String> beverageBox;
