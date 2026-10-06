@@ -4,11 +4,14 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.PathTransition.OrientationType;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
@@ -76,31 +80,63 @@ public class App extends Application {
         stage.show(); */
         BorderPane root = new BorderPane();
         Pane upperPane = new Pane();
-        HBox bottomBox = new HBox();
+        HBox bottomBox = new HBox(10);
+        bottomBox.setAlignment(Pos.CENTER);
         
-        Rectangle rectangleMNPQ = new Rectangle(600, 400);
+        Line lineMN = new Line(200, 200, 600, 200);
+        Line lineNP = new Line(600, 200, 600, 500);
+        Line linePQ = new Line(600, 500, 200, 500);
+        Line lineQM = new Line(200, 500, 200, 200);
         
         Image image = new Image("/cat.jpeg");
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(200); 
         imageView.setPreserveRatio(true);
         
-//        Path path = new Path();
-//        path.getElements().add(new MoveTo (0, 50));
-//        path.getElements().add(new CubicCurveTo (40, 10, 390, 240, 1904, 50));
+        PathTransition transitionMN = new PathTransition();
+        transitionMN.setDuration(Duration.millis(1500));
+        transitionMN.setNode(imageView);
+        transitionMN.setPath(lineMN);
+        transitionMN.setRate(-1.0);
+        transitionMN.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
-        PathTransition pathTransition = 
-                new PathTransition();
- 
-        pathTransition.setDuration(Duration.millis(10000));
-        pathTransition.setNode(imageView);
-        pathTransition.setPath(rectangleMNPQ);
-        pathTransition.setRate(-1.0);
-        pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(Timeline.INDEFINITE);
-        pathTransition.play();
+        PathTransition transitionNP = new PathTransition();
+        transitionNP.setDuration(Duration.millis(1500));
+        transitionNP.setNode(imageView);
+        transitionNP.setPath(lineNP);
+        transitionNP.setRate(-1.0);
+        transitionNP.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+        
+        PathTransition transitionPQ = new PathTransition();
+        transitionPQ.setDuration(Duration.millis(1500));
+        transitionPQ.setNode(imageView);
+        transitionPQ.setPath(linePQ);
+        transitionPQ.setRate(-1.0);
+        transitionPQ.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+        
+        PathTransition transitionQM = new PathTransition();
+        transitionQM.setDuration(Duration.millis(1500));
+        transitionQM.setNode(imageView);
+        transitionQM.setPath(lineQM);
+        transitionQM.setRate(-1.0);
+        transitionQM.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+
+        
+        SequentialTransition seq = new SequentialTransition(
+                transitionMN, transitionNP, transitionPQ, transitionQM
+        );
+        seq.play();
         
         upperPane.getChildren().addAll(imageView);
+        
+        Button startBtn = new Button("Start");
+        Button resetBtn = new Button("Reset");
+        Button exitBtn = new Button("Exit");
+        startBtn.setPrefWidth(200);
+        resetBtn.setPrefWidth(200);
+        exitBtn.setPrefWidth(200);
+        
+        bottomBox.getChildren().addAll(startBtn, resetBtn, exitBtn);
         
         root.setCenter(upperPane);
         root.setBottom(bottomBox);
