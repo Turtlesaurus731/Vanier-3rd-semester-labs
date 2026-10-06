@@ -1,14 +1,25 @@
 package com.mycompany.lab07;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.PathTransition.OrientationType;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -63,8 +74,39 @@ public class App extends Application {
         translateTransition.play();
         stage.setScene(scene);
         stage.show(); */
-      
-      
+        BorderPane root = new BorderPane();
+        Pane upperPane = new Pane();
+        HBox bottomBox = new HBox();
+        
+        Rectangle rectangleMNPQ = new Rectangle(600, 400);
+        
+        Image image = new Image("/cat.jpeg");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(200); 
+        imageView.setPreserveRatio(true);
+        
+//        Path path = new Path();
+//        path.getElements().add(new MoveTo (0, 50));
+//        path.getElements().add(new CubicCurveTo (40, 10, 390, 240, 1904, 50));
+        
+        PathTransition pathTransition = 
+                new PathTransition();
+ 
+        pathTransition.setDuration(Duration.millis(10000));
+        pathTransition.setNode(imageView);
+        pathTransition.setPath(rectangleMNPQ);
+        pathTransition.setRate(-1.0);
+        pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setCycleCount(Timeline.INDEFINITE);
+        pathTransition.play();
+        
+        upperPane.getChildren().addAll(imageView);
+        
+        root.setCenter(upperPane);
+        root.setBottom(bottomBox);
+        Scene scene = new Scene(root, 800, 800);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
