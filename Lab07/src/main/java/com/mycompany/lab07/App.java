@@ -178,6 +178,19 @@ public class App extends Application {
         resetBtn.setPrefWidth(200);
         exitBtn.setPrefWidth(200);
         
+        startBtn.setOnAction(e -> animation.play());
+        
+        resetBtn.setOnAction(e ->{
+            animation.stop();
+            imageViewB.setOpacity(1.0);
+            imageViewB.setScaleX(1.0);
+            imageViewB.setScaleY(1.0);
+            imageViewB.setRotate(0);
+            imageViewB.setTranslateY(0);
+            imageView.setTranslateX(0);
+            imageView.setTranslateY(0);
+        });
+        
         bottomBox.getChildren().addAll(startBtn, resetBtn, exitBtn);
         
         root.setCenter(upperPane);
@@ -190,5 +203,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }
