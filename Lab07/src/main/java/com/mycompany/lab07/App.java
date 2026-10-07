@@ -94,10 +94,10 @@ public class App extends Application {
         
         Image image = new Image("/cat.jpeg");
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(200); 
+        imageView.setFitWidth(150); 
         imageView.setPreserveRatio(true);
-        imageView.setX(200);
-        imageView.setY(200);
+        imageView.setX(150);
+        imageView.setY(175);
         
         Image imageB = new Image("/cat2.jpg");
         ImageView imageViewB = new ImageView(imageB);
@@ -110,28 +110,28 @@ public class App extends Application {
         transitionMN.setDuration(Duration.millis(1500));
         transitionMN.setNode(imageView);
         transitionMN.setPath(lineMN);
-        transitionMN.setRate(-1.0);
+//        transitionMN.setRate(-1.0);
         transitionMN.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         PathTransition transitionNP = new PathTransition();
         transitionNP.setDuration(Duration.millis(1500));
         transitionNP.setNode(imageView);
         transitionNP.setPath(lineNP);
-        transitionNP.setRate(-1.0);
+//        transitionNP.setRate(-1.0);
         transitionNP.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         PathTransition transitionPQ = new PathTransition();
         transitionPQ.setDuration(Duration.millis(1500));
         transitionPQ.setNode(imageView);
         transitionPQ.setPath(linePQ);
-        transitionPQ.setRate(-1.0);
+//        transitionPQ.setRate(-1.0);
         transitionPQ.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         PathTransition transitionQM = new PathTransition();
         transitionQM.setDuration(Duration.millis(1500));
         transitionQM.setNode(imageView);
         transitionQM.setPath(lineQM);
-        transitionQM.setRate(-1.0);
+//        transitionQM.setRate(-1.0);
         transitionQM.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         FadeTransition fadeB = new FadeTransition(
@@ -166,8 +166,7 @@ public class App extends Application {
                 fadeB, scaleB, rotateB, moveB
         );
         
-        ParallelTransition animation = new ParallelTransition(seqA, seqB);
-        animation.play();        
+        ParallelTransition animation = new ParallelTransition(seqA, seqB);      
         
         upperPane.getChildren().addAll(imageView, imageViewB);
         
@@ -178,7 +177,17 @@ public class App extends Application {
         resetBtn.setPrefWidth(200);
         exitBtn.setPrefWidth(200);
         
-        startBtn.setOnAction(e -> animation.play());
+        startBtn.setOnAction(e -> { 
+            imageViewB.setOpacity(1.0);
+            imageViewB.setScaleX(1.0);
+            imageViewB.setScaleY(1.0);
+            imageViewB.setRotate(0);
+            imageViewB.setTranslateY(0);
+            imageView.setTranslateX(0);
+            imageView.setTranslateY(0);
+            
+            animation.playFromStart();
+        });
         
         resetBtn.setOnAction(e ->{
             animation.stop();
@@ -190,6 +199,8 @@ public class App extends Application {
             imageView.setTranslateX(0);
             imageView.setTranslateY(0);
         });
+        
+        exitBtn.setOnAction(e -> javafx.application.Platform.exit());
         
         bottomBox.getChildren().addAll(startBtn, resetBtn, exitBtn);
         
