@@ -110,28 +110,24 @@ public class App extends Application {
         transitionMN.setDuration(Duration.millis(1500));
         transitionMN.setNode(imageView);
         transitionMN.setPath(lineMN);
-//        transitionMN.setRate(-1.0);
         transitionMN.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         PathTransition transitionNP = new PathTransition();
         transitionNP.setDuration(Duration.millis(1500));
         transitionNP.setNode(imageView);
         transitionNP.setPath(lineNP);
-//        transitionNP.setRate(-1.0);
         transitionNP.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         PathTransition transitionPQ = new PathTransition();
         transitionPQ.setDuration(Duration.millis(1500));
         transitionPQ.setNode(imageView);
         transitionPQ.setPath(linePQ);
-//        transitionPQ.setRate(-1.0);
         transitionPQ.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         PathTransition transitionQM = new PathTransition();
         transitionQM.setDuration(Duration.millis(1500));
         transitionQM.setNode(imageView);
         transitionQM.setPath(lineQM);
-//        transitionQM.setRate(-1.0);
         transitionQM.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         
         FadeTransition fadeB = new FadeTransition(
@@ -156,7 +152,7 @@ public class App extends Application {
         TranslateTransition moveB = new TranslateTransition(
                 Duration.millis(1500), imageViewB
         );
-        moveB.setByY(-100);
+        moveB.setByY(-125);
         
         SequentialTransition seqA = new SequentialTransition(
                 transitionMN, transitionNP, transitionPQ, transitionQM
@@ -183,6 +179,7 @@ public class App extends Application {
             imageViewB.setScaleY(1.0);
             imageViewB.setRotate(0);
             imageViewB.setTranslateY(0);
+            imageView.setRotate(0);
             imageView.setTranslateX(0);
             imageView.setTranslateY(0);
             
@@ -196,11 +193,18 @@ public class App extends Application {
             imageViewB.setScaleY(1.0);
             imageViewB.setRotate(0);
             imageViewB.setTranslateY(0);
+            imageView.setRotate(0);
             imageView.setTranslateX(0);
             imageView.setTranslateY(0);
         });
-        
+
         exitBtn.setOnAction(e -> javafx.application.Platform.exit());
+        
+        animation.setOnFinished(e -> {
+            imageView.setRotate(0);
+            imageView.setTranslateX(0);
+            imageView.setTranslateY(0);
+        });
         
         bottomBox.getChildren().addAll(startBtn, resetBtn, exitBtn);
         
