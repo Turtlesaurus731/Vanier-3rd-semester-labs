@@ -2,8 +2,11 @@ package com.mycompany.lab07;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.PathTransition.OrientationType;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -78,6 +81,7 @@ public class App extends Application {
         translateTransition.play();
         stage.setScene(scene);
         stage.show(); */
+      
         BorderPane root = new BorderPane();
         Pane upperPane = new Pane();
         HBox bottomBox = new HBox(10);
@@ -92,6 +96,15 @@ public class App extends Application {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(200); 
         imageView.setPreserveRatio(true);
+        imageView.setX(200);
+        imageView.setY(200);
+        
+        Image imageB = new Image("/cat2.jpg");
+        ImageView imageViewB = new ImageView(imageB);
+        imageViewB.setFitWidth(50); 
+        imageViewB.setPreserveRatio(true);
+        imageViewB.setX(350); 
+        imageViewB.setY(325);
         
         PathTransition transitionMN = new PathTransition();
         transitionMN.setDuration(Duration.millis(1500));
@@ -120,14 +133,43 @@ public class App extends Application {
         transitionQM.setPath(lineQM);
         transitionQM.setRate(-1.0);
         transitionQM.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
-
         
-        SequentialTransition seq = new SequentialTransition(
+        FadeTransition fadeB = new FadeTransition(
+                Duration.millis(1500), imageViewB
+        );  
+        fadeB.setFromValue(1.0);
+        fadeB.setToValue(0.25);
+        
+        ScaleTransition scaleB = new ScaleTransition(
+                Duration.millis(1500), imageViewB
+        );
+        scaleB.setFromX(1.0);
+        scaleB.setFromY(1.0);
+        scaleB.setToX(2.0);
+        scaleB.setToY(2.0);
+        
+        RotateTransition rotateB = new RotateTransition(
+                Duration.millis(1500), imageViewB
+        );
+        rotateB.setByAngle(360);
+        
+        TranslateTransition moveB = new TranslateTransition(
+                Duration.millis(1500), imageViewB
+        );
+        moveB.setByY(-100);
+        
+        SequentialTransition seqA = new SequentialTransition(
                 transitionMN, transitionNP, transitionPQ, transitionQM
         );
-        seq.play();
         
-        upperPane.getChildren().addAll(imageView);
+        SequentialTransition seqB = new SequentialTransition(
+                fadeB, scaleB, rotateB, moveB
+        );
+        
+        ParallelTransition animation = new ParallelTransition(seqA, seqB);
+        animation.play();        
+        
+        upperPane.getChildren().addAll(imageView, imageViewB);
         
         Button startBtn = new Button("Start");
         Button resetBtn = new Button("Reset");
