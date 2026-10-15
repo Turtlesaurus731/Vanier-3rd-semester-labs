@@ -52,7 +52,7 @@ public class PainterController implements Initializable {
     
     @FXML
     void clearButtonPressed(ActionEvent event) {
-
+        drawingAreaPane.getChildren().clear();
     }
 
     @FXML
@@ -84,7 +84,11 @@ public class PainterController implements Initializable {
 
     @FXML
     void undoButtonPressed(ActionEvent event) {
+        int numOfElements = drawingAreaPane.getChildren().size();
         
+        if (numOfElements > 0) {
+            drawingAreaPane.getChildren().remove(numOfElements - 1);
+        }
     }
     
     private PenSize radius = PenSize.MEDIUM;
@@ -110,7 +114,7 @@ public class PainterController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        initialize();
     }    
     
     private enum PenSize {
