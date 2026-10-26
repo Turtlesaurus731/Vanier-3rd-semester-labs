@@ -19,6 +19,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = loadFXML("ColorChooser");
         scene = new Scene(root);
+        stage.setTitle("ColorChooser");
         stage.setScene(scene);
         stage.show();
     }
