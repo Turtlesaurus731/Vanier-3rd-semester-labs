@@ -70,7 +70,6 @@ public class ColorChooserController implements Initializable {
         alphaSlider.valueProperty().addListener((ov, oldValue, newValue) -> updateColor());
     }    
     
-    
     public void updateColor() {
         red = (int) redSlider.getValue();
         blue = (int) blueSlider.getValue();

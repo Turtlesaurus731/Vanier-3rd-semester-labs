@@ -12,7 +12,7 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
+//  github link: https://github.com/Turtlesaurus731/Vanier-3rd-semester-labs.git
     private static Scene scene;
 
     @Override
