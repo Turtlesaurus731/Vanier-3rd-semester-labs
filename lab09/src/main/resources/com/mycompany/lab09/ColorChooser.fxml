@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 
 <GridPane hgap="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26">
   <columnConstraints>
@@ -21,4 +26,20 @@
    <padding>
       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
    </padding>
+   <children>
+      <Slider fx:id="greenSlider" blockIncrement="1.0" max="255.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Slider fx:id="redSlider" blockIncrement="1.0" max="255.0" GridPane.columnIndex="1" />
+      <Slider fx:id="blueSlider" blockIncrement="1.0" max="255.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Slider fx:id="alphaSlider" blockIncrement="0.01" max="1.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label text="Red" />
+      <Label text="Blue" GridPane.rowIndex="1" />
+      <Label text="Green" GridPane.rowIndex="2" />
+      <Label text="Alpha" GridPane.rowIndex="3" />
+      <TextField fx:id="redTextField" GridPane.columnIndex="2" />
+      <TextField fx:id="blueTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <TextField fx:id="greenTextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <TextField fx:id="alphaTextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Circle fx:id="colorCircle" fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" />
+      <Rectangle fx:id="colorRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" GridPane.columnIndex="3" />
+   </children>
 </GridPane>
