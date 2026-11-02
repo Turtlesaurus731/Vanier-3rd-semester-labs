@@ -12,7 +12,7 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu text="File">
+          <Menu text="_File">
             <items>
               <MenuItem fx:id="newItem" mnemonicParsing="false" onAction="#handleNew" text="New" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -21,7 +21,7 @@
                   <MenuItem fx:id="saveItem" mnemonicParsing="false" text="Save as" />
             </items>
           </Menu>
-          <Menu text="Edit">
+          <Menu text="_Edit">
             <items>
                   <CheckMenuItem fx:id="gridItem" mnemonicParsing="false" onAction="#handleGrid" text="Use GridLines" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -34,7 +34,7 @@
                   </Menu>
             </items>
           </Menu>
-          <Menu text="Settings">
+          <Menu text="_Settings">
             <items>
                   <RadioMenuItem fx:id="smallItem" mnemonicParsing="false" onAction="#handleSizeSmall" text="Small" />
                   <RadioMenuItem fx:id="mediumItem" mnemonicParsing="false" onAction="#handleSizeMedium" text="Medium" />
