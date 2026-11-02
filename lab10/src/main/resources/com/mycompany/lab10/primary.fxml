@@ -24,6 +24,7 @@
           <Menu text="Edit">
             <items>
                   <CheckMenuItem fx:id="gridItem" mnemonicParsing="false" onAction="#handleGrid" text="Use GridLines" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="copyItem" mnemonicParsing="false" onAction="#handleCopy" text="Copy" />
                   <Menu fx:id="searchMenu" mnemonicParsing="false" text="Search">
                     <items>
