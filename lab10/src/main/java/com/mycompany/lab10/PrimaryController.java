@@ -22,7 +22,7 @@ import javafx.scene.layout.BorderPane;
 /**
  * FXML Controller class
  *
- * @author 2584955
+ * @author (2584955) Patrick Huy The Tran
  */
 public class PrimaryController implements Initializable {
     @FXML
