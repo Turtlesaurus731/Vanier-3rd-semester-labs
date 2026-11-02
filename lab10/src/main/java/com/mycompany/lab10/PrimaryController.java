@@ -11,17 +11,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.BorderPane;
 /**
  * FXML Controller class
  *
  * @author 2584955
  */
 public class PrimaryController implements Initializable {
-
-
+    @FXML
+    private BorderPane mainPane;
     @FXML
     private MenuItem newItem;
     @FXML
@@ -46,16 +51,42 @@ public class PrimaryController implements Initializable {
     private RadioMenuItem mediumItem;
     @FXML
     private RadioMenuItem largeItem;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        ToggleGroup tg = new ToggleGroup();
+        smallItem.setToggleGroup(tg);
+        mediumItem.setToggleGroup(tg);
+        largeItem.setToggleGroup(tg);
+        closeItem.setDisable(true); // disabled until a file is "opened"
+        
+        newItem.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
+        openItem.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
+        closeItem.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
+        saveItem.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
+        
+        ContextMenu popup = new ContextMenu();
+        MenuItem help = new MenuItem("Help");
+        MenuItem inspect = new MenuItem("Inspect");
+        popup.getItems().addAll(help, inspect);
+        
+        mainPane.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                popup.show(mainPane, e.getScreenX() - 50, e.getScreenY() - 25);
+            }
+        });
     }    
     
     @FXML
     private void handleNew(ActionEvent event) {
+        System.out.println("NEW has been pressed");
+        newItem.setDisable(true);
+        openItem.setDisable(true);
+        closeItem.setDisable(false);
+
     }
 
     @FXML
@@ -68,6 +99,10 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void handleGrid(ActionEvent event) {
+        if (gridItem.isSelected())
+            System.out.println("USE GRIDLINES selected");
+        else
+            System.out.println("USE GRIDLINES unselected");
     }
 
     @FXML
