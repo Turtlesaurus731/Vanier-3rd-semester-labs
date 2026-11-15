@@ -6,8 +6,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -15,13 +18,13 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="600.0" spacing="10.0">
          <children>
             <StackPane prefHeight="200.0" prefWidth="40.0" style="-fx-background-color: green;">
                <children>
-                  <Label text="S&#10;T&#10;A&#10;R&#10;T&#10;I&#10;N&#10;G" textAlignment="CENTER" />
+                  <Label text="S&#10;T&#10;A&#10;R&#10;T&#10;I&#10;N&#10;G" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </StackPane>
             <Pane prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: #3d4753;">
@@ -161,28 +164,28 @@
             </Pane>
             <StackPane prefHeight="200.0" prefWidth="40.0" style="-fx-background-color: green;">
                <children>
-                  <Label text="A&#10;R&#10;I&#10;V&#10;A&#10;L" textAlignment="CENTER" />
+                  <Label text="A&#10;R&#10;I&#10;V&#10;A&#10;L" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </StackPane>
          </children>
       </HBox>
       <HBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="600.0" spacing="20.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="322.0" spacing="20.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="322.0" spacing="20.0" style="-fx-background-color: grey; -fx-border-color: black;">
                <children>
                   <HBox alignment="TOP_CENTER" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Start">
+                        <Button fx:id="startBtn" mnemonicParsing="false" style="-fx-background-color: green;" text="Start" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" text="Pause">
+                        <Button fx:id="pauseBtn" mnemonicParsing="false" style="-fx-background-color: blue;" text="Pause" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" text="Reset">
+                        <Button fx:id="resetBtn" mnemonicParsing="false" style="-fx-background-color: red;" text="Reset" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -192,8 +195,8 @@
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Label text="Simulation Speed: " />
-                        <Slider />
-                        <Label text="1.0x" />
+                        <Slider fx:id="simulationSpeedSlider" />
+                        <Label fx:id="simulationSpeedLabel" text="1.0x" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
@@ -201,14 +204,48 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox>
+            <VBox prefHeight="200.0" prefWidth="273.0">
                <children>
                   <VBox alignment="TOP_CENTER">
                      <children>
                         <Label text="Race Status" />
                         <Label text="Winning car" />
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </VBox>
+                  <GridPane alignment="CENTER" gridLinesVisible="true" hgap="5.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.5" minWidth="10.0" prefWidth="23.5" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="88.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.5" minWidth="10.0" prefWidth="99.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.5" minWidth="10.0" prefWidth="26.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Circle fill="#ffee00" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#a17601" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
+                        <Circle fill="#cdccbe" layoutX="21.0" layoutY="55.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
+                        <Circle fill="#008dff" layoutX="21.0" layoutY="25.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="3" />
+                        <Label text=" Car #4 (red)" GridPane.columnIndex="1" />
+                        <Label text=" Car #3 (purple)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text=" Car #2 (green)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label prefHeight="17.0" prefWidth="73.0" text=" Car #1 (blue)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text=" 1st" GridPane.columnIndex="3" />
+                        <Label text=" 2nd" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label text=" 3rd" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label text=" 4th" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </GridPane>
                </children>
             </VBox>
          </children>
