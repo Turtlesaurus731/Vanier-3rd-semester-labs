@@ -233,10 +233,10 @@
                         <Circle fill="#a17601" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
                         <Circle fill="#cdccbe" layoutX="21.0" layoutY="55.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
                         <Circle fill="#008dff" layoutX="21.0" layoutY="25.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="3" />
-                        <Label text=" Car #4 (red)" GridPane.columnIndex="1" />
-                        <Label text=" Car #3 (purple)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text=" Car #2 (green)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label prefHeight="17.0" prefWidth="73.0" text=" Car #1 (blue)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="firstPlaceLabel" text=" Car #4 (red)" GridPane.columnIndex="1" />
+                        <Label fx:id="secondPlaceLabel" text=" Car #3 (purple)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="thirdPlaceLabel" text=" Car #2 (green)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="fourthPlaceLabel" prefHeight="17.0" prefWidth="73.0" text=" Car #1 (blue)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text=" 1st" GridPane.columnIndex="3" />
                         <Label text=" 2nd" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label text=" 3rd" GridPane.columnIndex="3" GridPane.rowIndex="2" />
