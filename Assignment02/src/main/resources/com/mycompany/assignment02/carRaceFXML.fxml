@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.assignment02.CarRaceController">
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="600.0" spacing="10.0">
          <children>
@@ -175,17 +175,17 @@
                <children>
                   <HBox alignment="TOP_CENTER" spacing="10.0">
                      <children>
-                        <Button fx:id="startBtn" mnemonicParsing="false" style="-fx-background-color: green;" text="Start" textFill="WHITE">
+                        <Button fx:id="startBtn" mnemonicParsing="false" onAction="#onActionStartButton" style="-fx-background-color: green;" text="Start" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
-                        <Button fx:id="pauseBtn" mnemonicParsing="false" style="-fx-background-color: blue;" text="Pause" textFill="WHITE">
+                        <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#onActionPauseButton" style="-fx-background-color: blue;" text="Pause" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
-                        <Button fx:id="resetBtn" mnemonicParsing="false" style="-fx-background-color: red;" text="Reset" textFill="WHITE">
+                        <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#onActionResetButton" style="-fx-background-color: red;" text="Reset" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
