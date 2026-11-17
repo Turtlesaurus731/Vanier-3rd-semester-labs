@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 /**
@@ -106,6 +107,7 @@ public class CarRaceController implements Initializable {
     @FXML
     private Group wheelCar04B;
     
+    private CarRaceModel model1, model2, model3, model4;
     
     private TranslateTransition moveCar1, moveCar2, moveCar3, moveCar4;
     private RotateTransition spinWheel1A, spinWheel1B, spinWheel2A, spinWheel2B, 
@@ -116,38 +118,54 @@ public class CarRaceController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
         buildAnimations();
     }
     
     private void buildAnimations() {
-        Random random = new Random();
-        // With a randomized time, I create TranslateTransitions for each car
+        // Instatiate car models
+        model1 = new CarRaceModel("Racing Car",
+                1, Color.DODGERBLUE, car01.getLayoutX(), car01.getLayoutY());
+        model2 = new CarRaceModel("Racing Car",
+                2, Color.FORESTGREEN, car02.getLayoutX(), car02.getLayoutY());
+        model3 = new CarRaceModel("Racing Car",
+                3, Color.PURPLE, car03.getLayoutX(), car03.getLayoutY());
+        model4 = new CarRaceModel("Racing Car",
+                4, Color.RED, car04.getLayoutX(), car04.getLayoutY());
+        
+        // Create TranslateTransitions using each model's randomized duration
         moveCar1 = new TranslateTransition(
-                Duration.millis(3000 + random.nextInt(2000)), car01);
+                Duration.millis(model1.getTravelDurationMillis()), car01);
         moveCar1.setToX(FINISH_LINE_X);
 
         moveCar2 = new TranslateTransition(
-                Duration.millis(3000 + random.nextInt(2000)), car02);
+                Duration.millis(model2.getTravelDurationMillis()), car02);
         moveCar2.setToX(FINISH_LINE_X);
 
         moveCar3 = new TranslateTransition(
-                Duration.millis(3000 + random.nextInt(2000)), car03);
+                Duration.millis(model3.getTravelDurationMillis()), car03);
         moveCar3.setToX(FINISH_LINE_X);
 
         moveCar4 = new TranslateTransition(
-                Duration.millis(3000 + random.nextInt(2000)), car04);
+                Duration.millis(model4.getTravelDurationMillis()), car04);
         moveCar4.setToX(FINISH_LINE_X);
         
         // Create the RotateTransition for each wheel with a method
-        spinWheel1A = createWheelRotator(wheelCar01A);
-        spinWheel1B = createWheelRotator(wheelCar01B);
-        spinWheel2A = createWheelRotator(wheelCar02A);
-        spinWheel2B = createWheelRotator(wheelCar02B);
-        spinWheel3A = createWheelRotator(wheelCar03A);
-        spinWheel3B = createWheelRotator(wheelCar03B);
-        spinWheel4A = createWheelRotator(wheelCar04A);
-        spinWheel4B = createWheelRotator(wheelCar04B);
+        spinWheel1A = createWheelRotator(
+                wheelCar01A, model1.getTravelDurationMillis());
+        spinWheel1B = createWheelRotator(
+                wheelCar01B, model1.getTravelDurationMillis());
+        spinWheel2A = createWheelRotator(
+                wheelCar02A, model2.getTravelDurationMillis());
+        spinWheel2B = createWheelRotator(
+                wheelCar02B, model2.getTravelDurationMillis());
+        spinWheel3A = createWheelRotator(
+                wheelCar03A, model3.getTravelDurationMillis());
+        spinWheel3B = createWheelRotator(
+                wheelCar03B, model3.getTravelDurationMillis());
+        spinWheel4A = createWheelRotator(
+                wheelCar04A, model4.getTravelDurationMillis());
+        spinWheel4B = createWheelRotator(
+                wheelCar04B, model4.getTravelDurationMillis());
         
         // Group all the Transitions into a parralel transition
         raceAnimation = new ParallelTransition(
@@ -161,15 +179,15 @@ public class CarRaceController implements Initializable {
      * Creates a RotateTransition for a car wheel that will rotate 360 degrees 
      * as long as needed.
      * @param wheel The group of circles and lines that form a wheel of a car
+     * @param travelDurationMillis The duration of the car travels & wheel turns
      * @return the RotateTransition that is set to rotate indefinitely 
      */
-    private RotateTransition createWheelRotator(Group wheel) {
+    private RotateTransition createWheelRotator(Group wheel, double travelDurationMillis) {
         RotateTransition rotate = 
                 new RotateTransition(Duration.millis(400), wheel);
         rotate.setByAngle(360);
-        rotate.setCycleCount(Animation.INDEFINITE);
+        rotate.setCycleCount((int) (travelDurationMillis / 300));
         return rotate;
-        //TODO: have the wheels not rotate indefinitly/ stop at target desti. 
     }
     
     @FXML
