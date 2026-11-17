@@ -5,8 +5,11 @@
 package com.mycompany.assignment02;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -119,31 +122,64 @@ public class CarRaceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if (simulationSpeedLabel != null) {
-                simulationSpeedLabel.setText(String.format("%.1fx", simulationSpeedSlider.getValue()));
+                simulationSpeedLabel.setText(String.format(
+                        "%.1fx", simulationSpeedSlider.getValue()
+                ));
                 
-                simulationSpeedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    simulationSpeedLabel.setText(String.format("%.1fx", newValue.doubleValue()));
+                simulationSpeedSlider.valueProperty().addListener(
+                        (observable, oldValue, newValue) -> {
+                            simulationSpeedLabel.setText(String.format(
+                                    "%.1fx", newValue.doubleValue()
+                            ));
                     
                     if (raceAnimation != null) {
                         raceAnimation.setRate(newValue.doubleValue());
                     }
                 });
             }
-        
         buildAnimations();
     }
     
+    /**
+     * Instantiates the 4 car models and makes sure all of them have unique speeds
+     * This should help is avoid ties in the race
+     */
+    private void initializeUniqueModels() {
+        boolean hasDuplicates = true;
+        
+        while (hasDuplicates) {
+            // Instatiate car models
+            model1 = new CarRaceModel("Racing Car",
+                1, Color.DODGERBLUE, car01.getLayoutX(), car01.getLayoutY());
+            model2 = new CarRaceModel("Racing Car",
+                    2, Color.FORESTGREEN, car02.getLayoutX(), car02.getLayoutY());
+            model3 = new CarRaceModel("Racing Car",
+                    3, Color.PURPLE, car03.getLayoutX(), car03.getLayoutY());
+            model4 = new CarRaceModel("Racing Car",
+                    4, Color.RED, car04.getLayoutX(), car04.getLayoutY());
+            
+            // Hash set filters out coppies 
+            Set<Double> durations = new HashSet<>(Arrays.asList(
+                    model1.getTravelDurationMillis(),
+                    model2.getTravelDurationMillis(),
+                    model3.getTravelDurationMillis(),
+                    model4.getTravelDurationMillis()
+            ));
+            
+            if (durations.size() == 4) {
+                hasDuplicates = false;
+            }
+        }
+    }
+    
+    /**
+     * Instantiates new car models with random speeds, sets up the 
+     * ParallelTransition containing all the car animations and adjusts the
+     * animation rate with the simulation speed slider
+     */
     private void buildAnimations() {
         // Instatiate car models
-        model1 = new CarRaceModel("Racing Car",
-                1, Color.DODGERBLUE, car01.getLayoutX(), car01.getLayoutY());
-        model2 = new CarRaceModel("Racing Car",
-                2, Color.FORESTGREEN, car02.getLayoutX(), car02.getLayoutY());
-        model3 = new CarRaceModel("Racing Car",
-                3, Color.PURPLE, car03.getLayoutX(), car03.getLayoutY());
-        model4 = new CarRaceModel("Racing Car",
-                4, Color.RED, car04.getLayoutX(), car04.getLayoutY());
-        
+        initializeUniqueModels();     
         // Create TranslateTransitions using each model's randomized duration
         moveCar1 = new TranslateTransition(
                 Duration.millis(model1.getTravelDurationMillis()), car01);
@@ -186,9 +222,9 @@ public class CarRaceController implements Initializable {
             spinWheel3A, spinWheel3B, spinWheel4A, spinWheel4B
         );
         
-       if (simulationSpeedSlider != null) {
+        if (simulationSpeedSlider != null) {
            raceAnimation.setRate(simulationSpeedSlider.getValue());
-       }
+        }  
     }
     
     /**
