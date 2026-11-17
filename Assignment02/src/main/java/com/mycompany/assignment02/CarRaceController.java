@@ -118,6 +118,18 @@ public class CarRaceController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (simulationSpeedLabel != null) {
+                simulationSpeedLabel.setText(String.format("%.1fx", simulationSpeedSlider.getValue()));
+                
+                simulationSpeedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    simulationSpeedLabel.setText(String.format("%.1fx", newValue.doubleValue()));
+                    
+                    if (raceAnimation != null) {
+                        raceAnimation.setRate(newValue.doubleValue());
+                    }
+                });
+            }
+        
         buildAnimations();
     }
     
@@ -172,7 +184,11 @@ public class CarRaceController implements Initializable {
             moveCar1, moveCar2, moveCar3, moveCar4,
             spinWheel1A, spinWheel1B, spinWheel2A, spinWheel2B,
             spinWheel3A, spinWheel3B, spinWheel4A, spinWheel4B
-        );    
+        );
+        
+       if (simulationSpeedSlider != null) {
+           raceAnimation.setRate(simulationSpeedSlider.getValue());
+       }
     }
     
     /**
@@ -205,12 +221,12 @@ public class CarRaceController implements Initializable {
     
     @FXML
     private void onActionResetButton (ActionEvent actionEvent) {
-        // TODO
         raceAnimation.stop();
         car01.setTranslateX(0);
         car02.setTranslateX(0);
         car03.setTranslateX(0);
         car04.setTranslateX(0);
+        simulationSpeedSlider.setValue(1.0);
         buildAnimations();
 
         startBtn.setDisable(false);

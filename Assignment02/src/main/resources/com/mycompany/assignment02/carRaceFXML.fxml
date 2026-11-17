@@ -195,7 +195,7 @@
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Label text="Simulation Speed: " />
-                        <Slider fx:id="simulationSpeedSlider" />
+                        <Slider fx:id="simulationSpeedSlider" max="3.0" min="0.2" value="1.0" />
                         <Label fx:id="simulationSpeedLabel" text="1.0x" />
                      </children>
                      <padding>
