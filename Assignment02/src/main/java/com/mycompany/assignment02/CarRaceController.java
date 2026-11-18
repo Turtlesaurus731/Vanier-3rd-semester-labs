@@ -113,6 +113,12 @@ public class CarRaceController implements Initializable {
     @FXML
     private Group wheelCar04B;
     
+    @FXML
+    private Label winningCarLabel;
+
+    @FXML
+    private Label raceStatusLabel;
+            
     private CarRaceModel model1, model2, model3, model4;
     
     private TranslateTransition moveCar1, moveCar2, moveCar3, moveCar4;
@@ -263,12 +269,25 @@ public class CarRaceController implements Initializable {
                 CarRaceModel::getTravelDurationMillis
         ));
         
+        //Get the winner
+        CarRaceModel winner = rankedCars.get(0);
+        String winnerColorName = getColorName(winner.getColor());
+        
+        if (winningCarLabel != null) {
+            winningCarLabel.setText(String.format("Car #%d (%s)", 
+                    winner.getCarNumber(), winnerColorName
+            ));
+        }
+        if (raceStatusLabel != null) {
+            raceStatusLabel.setText("Race Finished! Congratulations! ^-^");
+        }
+        
         // Change the labels acording to the ranking
         if (firstPlaceLabel != null) {
-            CarRaceModel winner = rankedCars.get(0);
             firstPlaceLabel.setText(String.format("Car #%d (%s)",
                     winner.getCarNumber(), getColorName(winner.getColor())
             ));
+            
         }
         if (secondPlaceLabel != null) {
             CarRaceModel second = rankedCars.get(1);
@@ -309,12 +328,20 @@ public class CarRaceController implements Initializable {
         raceAnimation.play();
         startBtn.setDisable(true);
         pauseBtn.setDisable(false);
+        
+        if (raceStatusLabel != null) {
+            raceStatusLabel.setText("Race Status: Race in Progress...");
+        }
     }
     
     @FXML
     private void onActionPauseButton(ActionEvent actionEvent) {
         raceAnimation.pause();
         startBtn.setDisable(false);
+        
+        if (raceStatusLabel != null) {
+            raceStatusLabel.setText("Race Status: Paused");
+        }
     }
     
     @FXML
@@ -330,7 +357,13 @@ public class CarRaceController implements Initializable {
         wheelCar04A.setRotate(0); wheelCar04B.setRotate(0);
         simulationSpeedSlider.setValue(1.0);
         buildAnimations();
-
+        
+        if (raceStatusLabel != null) {
+            raceStatusLabel.setText("Race Status: Awaiting Start");
+        } 
+        if (winningCarLabel != null) {
+           winningCarLabel.setText("The winning car will apear here");
+        }
         startBtn.setDisable(false);
         pauseBtn.setDisable(false);
     }

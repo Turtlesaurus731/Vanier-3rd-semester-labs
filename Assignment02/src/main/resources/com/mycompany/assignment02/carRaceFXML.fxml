@@ -208,8 +208,8 @@
                <children>
                   <VBox alignment="TOP_CENTER">
                      <children>
-                        <Label fx:id="raceStatusLabel" text="Race Status" />
-                        <Label fx:id="winningCarLabel" text="Winning car" />
+                        <Label fx:id="raceStatusLabel" text="Race Status: Awaiting Start" />
+                        <Label fx:id="winningCarLabel" text="The winning car will apear here" />
                      </children>
                      <VBox.margin>
                         <Insets top="5.0" />
