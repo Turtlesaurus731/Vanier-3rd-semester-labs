@@ -267,29 +267,41 @@ public class CarRaceController implements Initializable {
         if (firstPlaceLabel != null) {
             CarRaceModel winner = rankedCars.get(0);
             firstPlaceLabel.setText(String.format("Car #%d (%s)",
-                    winner.getCarNumber(), winner.getColor().toString()
+                    winner.getCarNumber(), getColorName(winner.getColor())
             ));
         }
         if (secondPlaceLabel != null) {
             CarRaceModel second = rankedCars.get(1);
             secondPlaceLabel.setText(String.format("Car #%d (%s)",
-                    second.getCarNumber(), second.getColor().toString()
+                    second.getCarNumber(), getColorName(second.getColor())
             ));
         }
         if (thirdPlaceLabel != null) {
             CarRaceModel third = rankedCars.get(2);
             thirdPlaceLabel.setText(String.format("Car #%d (%s)",
-                    third.getCarNumber(), third.getColor().toString()
+                    third.getCarNumber(), getColorName(third.getColor())
             ));
         }
         if (fourthPlaceLabel != null) {
             CarRaceModel fourth = rankedCars.get(3);
             fourthPlaceLabel.setText(String.format("Car #%d (%s)",
-                    fourth.getCarNumber(), fourth.getColor().toString()
+                    fourth.getCarNumber(), getColorName(fourth.getColor())
             ));
         }
         startBtn.setDisable(true);
         pauseBtn.setDisable(true);
+    }
+    
+    /**
+     * Converts a JavaFX Color object into a readable string name for rankings
+     */
+    private String getColorName(Color color) {
+        if (color.equals(Color.DODGERBLUE) || color.equals(Color.BLUE)) return "Blue";
+        if (color.equals(Color.FORESTGREEN)) return "Green";
+        if (color.equals(Color.PURPLE)) return "Purple";
+        if (color.equals(Color.RED)) return "Red";
+        if (color.equals(Color.YELLOW)) return "Yellow";
+        return "Custom";
     }
     
     @FXML
@@ -312,6 +324,10 @@ public class CarRaceController implements Initializable {
         car02.setTranslateX(0);
         car03.setTranslateX(0);
         car04.setTranslateX(0);
+        wheelCar01A.setRotate(0); wheelCar01B.setRotate(0);
+        wheelCar02A.setRotate(0); wheelCar02B.setRotate(0);
+        wheelCar03A.setRotate(0); wheelCar03B.setRotate(0);
+        wheelCar04A.setRotate(0); wheelCar04B.setRotate(0);
         simulationSpeedSlider.setValue(1.0);
         buildAnimations();
 

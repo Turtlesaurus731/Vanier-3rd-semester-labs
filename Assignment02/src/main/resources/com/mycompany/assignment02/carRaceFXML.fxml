@@ -208,8 +208,8 @@
                <children>
                   <VBox alignment="TOP_CENTER">
                      <children>
-                        <Label text="Race Status" />
-                        <Label text="Winning car" />
+                        <Label fx:id="raceStatusLabel" text="Race Status" />
+                        <Label fx:id="winningCarLabel" text="Winning car" />
                      </children>
                      <VBox.margin>
                         <Insets top="5.0" />
@@ -218,8 +218,8 @@
                   <GridPane alignment="CENTER" gridLinesVisible="true" hgap="5.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.5" minWidth="10.0" prefWidth="23.5" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="88.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.5" minWidth="10.0" prefWidth="99.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="87.5" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.5" minWidth="10.0" prefWidth="99.5" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.5" minWidth="10.0" prefWidth="26.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -236,7 +236,7 @@
                         <Label fx:id="firstPlaceLabel" text=" Car #4 (red)" GridPane.columnIndex="1" />
                         <Label fx:id="secondPlaceLabel" text=" Car #3 (purple)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="thirdPlaceLabel" text=" Car #2 (green)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="fourthPlaceLabel" prefHeight="17.0" prefWidth="73.0" text=" Car #1 (blue)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="fourthPlaceLabel" text=" Car #1 (blue)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text=" 1st" GridPane.columnIndex="3" />
                         <Label text=" 2nd" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label text=" 3rd" GridPane.columnIndex="3" GridPane.rowIndex="2" />
