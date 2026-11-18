@@ -364,6 +364,18 @@ public class CarRaceController implements Initializable {
         if (winningCarLabel != null) {
            winningCarLabel.setText("The winning car will apear here");
         }
+        if (firstPlaceLabel != null) { 
+            firstPlaceLabel.setText("No rankings yet");
+        }
+        if (secondPlaceLabel != null) {
+            secondPlaceLabel.setText("No rankings yet");
+        }
+        if (thirdPlaceLabel != null) {
+            thirdPlaceLabel.setText("No rankings yet");
+        }
+        if (fourthPlaceLabel != null) {
+            fourthPlaceLabel.setText("No rankings yet");
+        }
         startBtn.setDisable(false);
         pauseBtn.setDisable(false);
     }
