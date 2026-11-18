@@ -5,8 +5,11 @@
 package com.mycompany.assignment02;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -175,7 +178,8 @@ public class CarRaceController implements Initializable {
     /**
      * Instantiates new car models with random speeds, sets up the 
      * ParallelTransition containing all the car animations and adjusts the
-     * animation rate with the simulation speed slider
+     * animation rate with the simulation speed slider. 
+     * Also contains calls handleRaceFinished method when parallel transition end
      */
     private void buildAnimations() {
         // Instatiate car models
@@ -215,7 +219,7 @@ public class CarRaceController implements Initializable {
         spinWheel4B = createWheelRotator(
                 wheelCar04B, model4.getTravelDurationMillis());
         
-        // Group all the Transitions into a parralel transition
+        // Group all the Transitions into a parallel transition
         raceAnimation = new ParallelTransition(
             moveCar1, moveCar2, moveCar3, moveCar4,
             spinWheel1A, spinWheel1B, spinWheel2A, spinWheel2B,
@@ -224,7 +228,11 @@ public class CarRaceController implements Initializable {
         
         if (simulationSpeedSlider != null) {
            raceAnimation.setRate(simulationSpeedSlider.getValue());
-        }  
+        }
+        
+        raceAnimation.setOnFinished(e ->{
+            handleRaceFinished();
+        });
     }
     
     /**
@@ -240,6 +248,48 @@ public class CarRaceController implements Initializable {
         rotate.setByAngle(360);
         rotate.setCycleCount((int) (travelDurationMillis / 300));
         return rotate;
+    }
+    
+    /**
+     * Handles the end of the race by ranking the cars final result based on
+     * duration and updates the labels accordingly
+     */
+    private void handleRaceFinished() {
+        // Put car models into a list and sort them by duration
+        List<CarRaceModel> rankedCars = new ArrayList<>(Arrays.asList(
+                model1, model2, model3, model4
+        ));
+        rankedCars.sort(Comparator.comparingDouble(
+                CarRaceModel::getTravelDurationMillis
+        ));
+        
+        // Change the labels acording to the ranking
+        if (firstPlaceLabel != null) {
+            CarRaceModel winner = rankedCars.get(0);
+            firstPlaceLabel.setText(String.format("Car #%d (%s)",
+                    winner.getCarNumber(), winner.getColor().toString()
+            ));
+        }
+        if (secondPlaceLabel != null) {
+            CarRaceModel second = rankedCars.get(1);
+            secondPlaceLabel.setText(String.format("Car #%d (%s)",
+                    second.getCarNumber(), second.getColor().toString()
+            ));
+        }
+        if (thirdPlaceLabel != null) {
+            CarRaceModel third = rankedCars.get(2);
+            thirdPlaceLabel.setText(String.format("Car #%d (%s)",
+                    third.getCarNumber(), third.getColor().toString()
+            ));
+        }
+        if (fourthPlaceLabel != null) {
+            CarRaceModel fourth = rankedCars.get(3);
+            fourthPlaceLabel.setText(String.format("Car #%d (%s)",
+                    fourth.getCarNumber(), fourth.getColor().toString()
+            ));
+        }
+        startBtn.setDisable(true);
+        pauseBtn.setDisable(true);
     }
     
     @FXML
