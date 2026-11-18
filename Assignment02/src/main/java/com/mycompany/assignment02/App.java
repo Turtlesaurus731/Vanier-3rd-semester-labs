@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * JavaFX App
+ * @author Patrick Huy The Tran
  */
 public class App extends Application {
 
@@ -17,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("carRaceFXML"));
+        scene = new Scene(loadFXML("slideshow"));
         stage.setScene(scene);
         stage.show();
     }
