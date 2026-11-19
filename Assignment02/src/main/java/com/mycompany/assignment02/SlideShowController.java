@@ -14,7 +14,10 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+
 
 /**
  *
@@ -28,6 +31,8 @@ public class SlideShowController implements Initializable{
     @FXML
     private VBox rootSlideShow;
     
+    private MediaPlayer mediaPlayer;
+    
     private final String[] carImages = {
       "/car01.png",  
       "/car02.png",  
@@ -37,12 +42,33 @@ public class SlideShowController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        playAudio();
         cycleImage();
     }
     
+    /**
+     * Loads and loops audio track indefinitely 
+     */
+    private void playAudio() {
+        URL resources = getClass().getResource("/guitar.wav");
+        if (resources != null) {
+            Media media = new Media(resources.toExternalForm());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
+        } else {
+            System.out.println("file not found");
+        }
+    }
+    
+    /**
+     * Plays a SequentialTransition that pauses for 3 seconds between car images
+     * After the final image and pause, it stops the audio and switches scene
+     */
     private void cycleImage() {
         SequentialTransition sequentialTransition = new SequentialTransition();
         
+        // loop trhough every carImage, pause then change image in imageView
         for (int i = 0; i < carImages.length; i++) {
             final int idx = i;
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
@@ -53,15 +79,19 @@ public class SlideShowController implements Initializable{
             sequentialTransition.getChildren().add(pause);
         }
         
+        // add extra 3 second pause to see car04 better
+        sequentialTransition.getChildren().add(
+                new PauseTransition(Duration.seconds(3)
+                ));
+        
         sequentialTransition.setOnFinished(e -> {
             try {
+                mediaPlayer.stop();
                 App.setRoot("CarRaceFXML");
             } catch (IOException ex) {
                ex.printStackTrace();
             }
         });
         sequentialTransition.play();
-    }
-       
-    
+    } 
 }
